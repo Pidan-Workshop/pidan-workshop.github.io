@@ -1,0 +1,22 @@
+{% comment %}
+  Generates alternate language links for SEO
+  Helps search engines understand multilingual content
+{% endcomment %}
+
+{% assign languages = site.data.languages %}
+
+{% for lang_data in languages %}
+  {% assign lang_code = lang_data[0] %}
+  
+  {% if page.ref %}
+    {% assign pages_with_ref = site.pages | where: "ref", page.ref %}
+    {% assign translated_page = pages_with_ref | where: "lang", lang_code | first %}
+    
+    {% if translated_page %}
+      <link rel="alternate" hreflang="{{ lang_code }}" href="{{ site.url }}{{ translated_page.url }}" />
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} Add x-default for the language selector page {% endcomment %}
+<link rel="alternate" hreflang="x-default" href="{{ site.url }}/" />

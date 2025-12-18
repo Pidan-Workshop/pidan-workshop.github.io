@@ -1,0 +1,20 @@
+{% comment %}
+  I18n Helper Functions
+  Usage examples:
+  - Get translation: {% include i18n-helper.html key="nav_home" %}
+  - Get current language: {{ page.lang }}
+  - Check if key exists before using it
+{% endcomment %}
+
+{% if include.key %}
+  {% assign t = site.data.translations[page.lang] %}
+  {% assign translation = t[include.key] %}
+  
+  {% if translation %}
+    {{ translation }}
+  {% else %}
+    {% comment %} Fallback to English if translation not found {% endcomment %}
+    {% assign t_en = site.data.translations['en'] %}
+    {{ t_en[include.key] | default: include.key }}
+  {% endif %}
+{% endif %}

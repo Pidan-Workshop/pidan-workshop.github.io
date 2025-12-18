@@ -3,6 +3,25 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Pidan Workshop - Loaded');
     
+    // Language preference management
+    const currentLang = document.documentElement.lang || 'en';
+    const savedLang = localStorage.getItem('preferredLanguage');
+    
+    // Save current language preference
+    if (currentLang && !savedLang) {
+        localStorage.setItem('preferredLanguage', currentLang);
+    }
+    
+    // Save language preference when clicking language switcher
+    document.querySelectorAll('.language-switcher .lang-link').forEach(link => {
+        link.addEventListener('click', function() {
+            const targetLang = this.getAttribute('lang');
+            if (targetLang) {
+                localStorage.setItem('preferredLanguage', targetLang);
+            }
+        });
+    });
+    
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {

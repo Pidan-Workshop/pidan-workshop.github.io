@@ -10,3 +10,24 @@
   release_date: 2025-12-18
   tags: ["platformer", "2d"]
   featured: true
+  
+- id: bomb-frog
+  title:
+    en: "Bomb Frog"
+    zh: "炸弹青蛙"
+  description:
+    en: |
+      Collect bombs and use them to uncover hidden treasure and vanquish ghosts. Collect enough treasure to progress to the next level - a target number is displayed in the lower left of the game.
+      Look for secrets! Beware the fearsome black ghosts!
+      Controls are included in the game. There are 8 levels of increasing difficulty.
+      "A fun action game where you control a frog with bomb mechanics
+    zh: |
+      收集炸弹，用它们来发现隐藏的宝藏并消灭幽灵。收集足够的宝藏即可进入下一关——目标数字会显示在游戏左下角。
+      寻找秘密！小心可怕的黑色幽灵！
+      游戏内包含操作说明。共有8个难度递增的关卡。
+  thumbnail: "/assets/images/games/bomb-frog.png"
+  path: "/games/bomb-frog/"
+  release_date: 2025-12-18
+  tags: ["pixel-art", "2d"]
+  featured: true
+  

@@ -1,6 +1,6 @@
 # Pidan Workshop
 
-Welcome to the official GitHub repository for Pidan Workshop's website! This is a multi-functional GitHub Pages site featuring product showcases, HTML5 games, and a bilingual blog.
+Welcome to the official GitHub repository for Pidan Workshop's webse! This is a multi-functional GitHub Pages site featuring product showcases, HTML5 games, and a bilingual blog.
 
 ## 🌐 Live Site
 

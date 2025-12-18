@@ -1,9 +1,0 @@
-{
-  "project_git" : { },
-  "bob_arguments" : {
-    "sha1" : "cddb6eb43c32e4930257fcbbb30f19cf28deb081",
-    "version" : "1.11.2",
-    "timestamp" : "2025-11-05 09:24:42"
-  },
-  "defold_sdk" : "cddb6eb43c32e4930257fcbbb30f19cf28deb081"
-}

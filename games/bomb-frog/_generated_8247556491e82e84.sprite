@@ -1,6 +1,0 @@
-default_animation: "ghost1"
-material: "/builtins/materials/sprite.material"
-textures {
-  sampler: "texture_sampler"
-  texture: "/game/core/main.tilesource"
-}

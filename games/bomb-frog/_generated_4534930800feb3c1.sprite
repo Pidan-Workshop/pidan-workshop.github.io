@@ -1,6 +1,0 @@
-default_animation: "bg2"
-material: "/builtins/materials/sprite.material"
-textures {
-  sampler: "texture_sampler"
-  texture: "/main/main.atlas"
-}

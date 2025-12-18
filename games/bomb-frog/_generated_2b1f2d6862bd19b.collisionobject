@@ -1,0 +1,21 @@
+type: COLLISION_OBJECT_TYPE_KINEMATIC
+mass: 0.0
+friction: 0.1
+restitution: 0.5
+group: "enemy"
+mask: "player"
+mask: "explosion"
+mask: "bomb"
+embedded_collision_shape {
+  shapes {
+    shape_type: TYPE_SPHERE
+    position {
+      x: -1.0
+    }
+    rotation {
+    }
+    index: 0
+    count: 1
+  }
+  data: 5.5
+}

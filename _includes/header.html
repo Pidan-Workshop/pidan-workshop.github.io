@@ -1,0 +1,21 @@
+{% assign t = site.data.translations[page.lang] %}
+
+<header class="site-header">
+    <div class="container">
+        <div class="header-content">
+            <a href="/{{ page.lang }}/" class="site-logo">
+                <span class="logo-text">{{ site.title }}</span>
+            </a>
+            
+            <nav class="main-nav">
+                <a href="/{{ page.lang }}/">{{ t.nav_home }}</a>
+                <a href="/{{ page.lang }}/games/">{{ t.nav_games }}</a>
+                <a href="/{{ page.lang }}/products/">{{ t.nav_products }}</a>
+                <a href="/{{ page.lang }}/blog/">{{ t.nav_blog }}</a>
+                <a href="/{{ page.lang }}/about/">{{ t.nav_about }}</a>
+            </nav>
+            
+            {% include language-switcher.html %}
+        </div>
+    </div>
+</header>

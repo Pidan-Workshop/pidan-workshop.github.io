@@ -1,0 +1,56 @@
+# Site settings
+title: Pidan Workshop
+description: A creative workshop for games and products
+baseurl: ""
+url: "https://pidanworshop.github.io"
+
+# Build settings
+markdown: kramdown
+permalink: /blog/:categories/:year/:month/:day/:title/
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - node_modules/
+  - vendor/
+
+# Collections
+collections:
+  games:
+    output: false
+
+# Defaults
+defaults:
+  - scope:
+      path: "_posts/en"
+      type: "posts"
+    values:
+      lang: "en"
+      layout: "post"
+  - scope:
+      path: "_posts/zh"
+      type: "posts"
+    values:
+      lang: "zh"
+      layout: "post"
+  - scope:
+      path: "en"
+    values:
+      lang: "en"
+  - scope:
+      path: "zh"
+    values:
+      lang: "zh"
+
+# Sass
+sass:
+  style: compressed
+  sass_dir: assets/css

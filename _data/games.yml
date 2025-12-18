@@ -1,0 +1,12 @@
+- id: sample-game
+  title:
+    en: "Sample Game"
+    zh: "示例游戏"
+  description:
+    en: "A sample Defold game showcasing our capabilities"
+    zh: "一个展示我们能力的 Defold 示例游戏"
+  thumbnail: "/assets/images/games/sample-game-thumb.jpg"
+  path: "/games/sample-game/"
+  release_date: 2025-12-18
+  tags: ["platformer", "2d"]
+  featured: true

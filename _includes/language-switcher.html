@@ -1,0 +1,42 @@
+{% assign languages = site.data.languages %}
+
+<div class="language-switcher">
+    {% for lang_data in languages %}
+        {% assign lang_code = lang_data[0] %}
+        {% assign lang_info = lang_data[1] %}
+        
+        {% if lang_code != page.lang %}
+            {% comment %} Find the translated version of current page {% endcomment %}
+            {% if page.ref %}
+                {% assign pages_with_ref = site.pages | where: "ref", page.ref %}
+                {% assign translated_page = pages_with_ref | where: "lang", lang_code | first %}
+                
+                {% if translated_page %}
+                    <a href="{{ translated_page.url | relative_url }}" 
+                       lang="{{ lang_code }}" 
+                       class="lang-link"
+                       title="{{ lang_info.name }}">
+                        <span class="flag">{{ lang_info.flag }}</span>
+                        <span class="lang-name">{{ lang_info.name }}</span>
+                    </a>
+                {% else %}
+                    <a href="/{{ lang_code }}/" 
+                       lang="{{ lang_code }}" 
+                       class="lang-link"
+                       title="{{ lang_info.name }}">
+                        <span class="flag">{{ lang_info.flag }}</span>
+                        <span class="lang-name">{{ lang_info.name }}</span>
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="/{{ lang_code }}/" 
+                   lang="{{ lang_code }}" 
+                   class="lang-link"
+                   title="{{ lang_info.name }}">
+                    <span class="flag">{{ lang_info.flag }}</span>
+                    <span class="lang-name">{{ lang_info.name }}</span>
+                </a>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+</div>

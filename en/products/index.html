@@ -1,0 +1,43 @@
+---
+layout: default
+title: Products
+lang: en
+ref: products
+---
+
+{% assign t = site.data.translations[page.lang] %}
+
+<section class="page-header">
+    <div class="container">
+        <h1>{{ t.products_title }}</h1>
+        <p>{{ t.products_subtitle }}</p>
+    </div>
+</section>
+
+<section class="products-section">
+    <div class="container">
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="placeholder-image">📦</div>
+                </div>
+                <div class="product-info">
+                    <h3>Product 1</h3>
+                    <p>Coming soon! We're working on exciting new products for you.</p>
+                    <a href="#" class="btn btn-secondary">{{ t.view_details }}</a>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="placeholder-image">🛠️</div>
+                </div>
+                <div class="product-info">
+                    <h3>Product 2</h3>
+                    <p>Stay tuned for updates on our innovative tools and solutions.</p>
+                    <a href="#" class="btn btn-secondary">{{ t.view_details }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

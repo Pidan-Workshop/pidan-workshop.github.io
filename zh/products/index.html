@@ -1,0 +1,43 @@
+---
+layout: default
+title: 产品
+lang: zh
+ref: products
+---
+
+{% assign t = site.data.translations[page.lang] %}
+
+<section class="page-header">
+    <div class="container">
+        <h1>{{ t.products_title }}</h1>
+        <p>{{ t.products_subtitle }}</p>
+    </div>
+</section>
+
+<section class="products-section">
+    <div class="container">
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="placeholder-image">📦</div>
+                </div>
+                <div class="product-info">
+                    <h3>产品 1</h3>
+                    <p>即将推出！我们正在为您开发令人兴奋的新产品。</p>
+                    <a href="#" class="btn btn-secondary">{{ t.view_details }}</a>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <div class="placeholder-image">🛠️</div>
+                </div>
+                <div class="product-info">
+                    <h3>产品 2</h3>
+                    <p>敬请期待我们创新工具和解决方案的更新。</p>
+                    <a href="#" class="btn btn-secondary">{{ t.view_details }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

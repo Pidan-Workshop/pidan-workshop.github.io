@@ -1,0 +1,42 @@
+---
+layout: default
+title: 游戏
+lang: zh
+ref: games
+---
+
+{% assign t = site.data.translations[page.lang] %}
+
+<section class="page-header">
+    <div class="container">
+        <h1>{{ t.games_title }}</h1>
+        <p>{{ t.games_subtitle }}</p>
+    </div>
+</section>
+
+<section class="games-section">
+    <div class="container">
+        <div class="games-grid">
+            {% for game in site.data.games %}
+            <div class="game-card">
+                <div class="game-thumbnail-wrapper">
+                    <img src="{{ game.thumbnail | relative_url }}" alt="{{ game.title[page.lang] }}" class="game-thumbnail">
+                </div>
+                <div class="game-info">
+                    <h3>{{ game.title[page.lang] }}</h3>
+                    <p>{{ game.description[page.lang] }}</p>
+                    <div class="game-meta">
+                        <span class="release-date">{{ game.release_date | date: "%Y年%m月" }}</span>
+                        <div class="game-tags">
+                            {% for tag in game.tags %}
+                            <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <a href="{{ game.path }}" class="btn btn-primary">{{ t.play_now }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

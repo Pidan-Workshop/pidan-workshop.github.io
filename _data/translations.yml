@@ -1,0 +1,85 @@
+en:
+  # Navigation
+  nav_home: "Home"
+  nav_games: "Games"
+  nav_products: "Products"
+  nav_blog: "Blog"
+  nav_about: "About"
+  
+  # Homepage
+  hero_title: "Welcome to Pidan Workshop"
+  hero_subtitle: "Creative games and innovative products"
+  hero_cta: "Explore Our Work"
+  
+  # Games
+  games_title: "Our Games"
+  games_subtitle: "Play our HTML5 games directly in your browser"
+  play_now: "Play Now"
+  learn_more: "Learn More"
+  
+  # Products
+  products_title: "Our Products"
+  products_subtitle: "Innovative solutions and creative tools"
+  view_details: "View Details"
+  
+  # Blog
+  blog_title: "Blog"
+  blog_subtitle: "Updates, tutorials, and insights"
+  read_more: "Read More"
+  by: "by"
+  posted_on: "Posted on"
+  
+  # Footer
+  footer_quick_links: "Quick Links"
+  footer_follow_us: "Follow Us"
+  footer_all_rights: "All rights reserved"
+  
+  # Common
+  loading: "Loading..."
+  error: "Error"
+  back: "Back"
+  next: "Next"
+  previous: "Previous"
+
+zh:
+  # Navigation
+  nav_home: "首页"
+  nav_games: "游戏"
+  nav_products: "产品"
+  nav_blog: "博客"
+  nav_about: "关于"
+  
+  # Homepage
+  hero_title: "欢迎来到皮蛋工作室"
+  hero_subtitle: "创意游戏与创新产品"
+  hero_cta: "探索我们的作品"
+  
+  # Games
+  games_title: "我们的游戏"
+  games_subtitle: "在浏览器中直接游玩我们的 HTML5 游戏"
+  play_now: "立即游玩"
+  learn_more: "了解更多"
+  
+  # Products
+  products_title: "我们的产品"
+  products_subtitle: "创新解决方案与创意工具"
+  view_details: "查看详情"
+  
+  # Blog
+  blog_title: "博客"
+  blog_subtitle: "更新、教程与见解"
+  read_more: "阅读更多"
+  by: "作者"
+  posted_on: "发布于"
+  
+  # Footer
+  footer_quick_links: "快速链接"
+  footer_follow_us: "关注我们"
+  footer_all_rights: "版权所有"
+  
+  # Common
+  loading: "加载中..."
+  error: "错误"
+  back: "返回"
+  next: "下一篇"
+  previous: "上一篇"

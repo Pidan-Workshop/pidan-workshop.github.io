@@ -1,0 +1,33 @@
+{% assign t = site.data.translations[page.lang] %}
+
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>{{ site.title }}</h3>
+                <p>{{ site.description }}</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>{{ t.footer_quick_links }}</h4>
+                <ul>
+                    <li><a href="/{{ page.lang }}/">{{ t.nav_home }}</a></li>
+                    <li><a href="/{{ page.lang }}/games/">{{ t.nav_games }}</a></li>
+                    <li><a href="/{{ page.lang }}/products/">{{ t.nav_products }}</a></li>
+                    <li><a href="/{{ page.lang }}/blog/">{{ t.nav_blog }}</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>{{ t.footer_follow_us }}</h4>
+                <div class="social-links">
+                    <a href="https://github.com/Pidan-Workshop" target="_blank" rel="noopener">GitHub</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. {{ t.footer_all_rights }}.</p>
+        </div>
+    </div>
+</footer>

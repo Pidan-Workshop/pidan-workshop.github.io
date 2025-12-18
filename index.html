@@ -100,15 +100,30 @@
         </div>
     </div>
     
+    <script src="/assets/js/i18n.js"></script>
     <script>
-        // Auto-detect language and redirect
-        const userLang = navigator.language || navigator.userLanguage;
-        const lang = userLang.toLowerCase().startsWith('zh') ? 'zh' : 'en';
+        // Auto-redirect based on saved preference or browser language
+        // Disabled by default for better UX - users can click to choose
+        // Uncomment the line below to enable automatic redirection
+        // PidanI18n.autoRedirect(2000);
         
-        // Uncomment to enable auto-redirect (disabled by default for better UX)
-        // setTimeout(() => {
-        //     window.location.href = `/${lang}/`;
-        // }, 2000);
+        // Show recommended language based on detection
+        document.addEventListener('DOMContentLoaded', function() {
+            const detectedLang = PidanI18n.getBrowserLanguage();
+            const recommendedBtn = document.querySelector(`.lang-btn[href="/${detectedLang}/"]`);
+            
+            if (recommendedBtn) {
+                const badge = document.createElement('span');
+                badge.className = 'recommended-badge';
+                badge.textContent = detectedLang === 'zh' ? '推荐' : 'Recommended';
+                badge.style.cssText = 'display:block;font-size:0.8rem;color:#667eea;margin-top:0.3rem;font-weight:500;';
+                recommendedBtn.appendChild(badge);
+                
+                // Subtle highlight effect
+                recommendedBtn.style.borderColor = '#667eea';
+                recommendedBtn.style.backgroundColor = '#f8f9ff';
+            }
+        });
     </script>
 </body>
 </html>

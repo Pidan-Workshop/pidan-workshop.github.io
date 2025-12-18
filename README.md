@@ -99,11 +99,15 @@ Your content here...
 
 ## 🌍 Internationalization
 
-This site uses a manual i18n approach with:
-- Separate directories for each language (`/en/`, `/zh/`)
-- Translation data files in `_data/translations.yml`
-- Language switcher component for easy navigation
-- Consistent `ref` values for linking translated content
+This site features a **mature, production-ready i18n system** with:
+- **Automatic Language Detection**: Browser language detection with fallbacks
+- **User Preference Persistence**: Cookies + localStorage for seamless experience
+- **SEO Optimization**: Proper hreflang tags, canonical URLs, and Open Graph locale
+- **Language Switcher**: Intelligent component that finds translated versions
+- **Translation Management**: Centralized translation files with fallback support
+- **Accessibility**: ARIA labels and semantic HTML for screen readers
+
+📖 **[Read the complete I18n Guide →](./I18N_GUIDE.md)**
 
 ## 🚀 Deployment
 

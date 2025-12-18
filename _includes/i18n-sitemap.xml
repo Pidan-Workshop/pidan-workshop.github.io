@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    {% comment %} Homepage / Language Selection {% endcomment %}
+    <url>
+        <loc>{{ site.url }}/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        {% for lang_data in site.data.languages %}
+            {% assign lang_code = lang_data[0] %}
+            <xhtml:link rel="alternate" hreflang="{{ lang_code }}" href="{{ site.url }}/{{ lang_code }}/" />
+        {% endfor %}
+    </url>
+    
+    {% comment %} All pages with language alternatives {% endcomment %}
+    {% assign pages_by_ref = site.pages | group_by: "ref" %}
+    
+    {% for ref_group in pages_by_ref %}
+        {% if ref_group.name != "" %}
+            {% for page in ref_group.items %}
+                {% unless page.url contains '/assets/' or page.url contains '/games/' %}
+                    <url>
+                        <loc>{{ site.url }}{{ page.url | remove: 'index.html' }}</loc>
+                        <changefreq>weekly</changefreq>
+                        <priority>{% if page.url == '/en/' or page.url == '/zh/' %}0.9{% else %}0.7{% endif %}</priority>
+                        
+                        {% comment %} Add alternate language links {% endcomment %}
+                        {% for alt_page in ref_group.items %}
+                            {% if alt_page.lang %}
+                                <xhtml:link rel="alternate" 
+                                          hreflang="{{ alt_page.lang }}" 
+                                          href="{{ site.url }}{{ alt_page.url | remove: 'index.html' }}" />
+                            {% endif %}
+                        {% endfor %}
+                    </url>
+                {% endunless %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    
+    {% comment %} Blog posts {% endcomment %}
+    {% for post in site.posts %}
+        <url>
+            <loc>{{ site.url }}{{ post.url }}</loc>
+            <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
+            <changefreq>monthly</changefreq>
+            <priority>0.6</priority>
+        </url>
+    {% endfor %}
+    
+    {% comment %} Games {% endcomment %}
+    {% for game in site.data.games %}
+        <url>
+            <loc>{{ site.url }}{{ game.path }}</loc>
+            <changefreq>monthly</changefreq>
+            <priority>0.8</priority>
+        </url>
+    {% endfor %}
+</urlset>

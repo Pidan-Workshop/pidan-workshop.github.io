@@ -1,0 +1,51 @@
+{% comment %}
+  I18n SEO Component
+  Generates hreflang tags for language alternatives
+  Improves SEO by indicating translated versions to search engines
+{% endcomment %}
+
+{% assign languages = site.data.languages %}
+
+{% comment %} Generate hreflang tags for translated versions {% endcomment %}
+{% if page.ref %}
+  {% assign pages_with_ref = site.pages | where: "ref", page.ref %}
+  
+  {% for lang_data in languages %}
+    {% assign lang_code = lang_data[0] %}
+    {% assign translated_page = pages_with_ref | where: "lang", lang_code | first %}
+    
+    {% if translated_page %}
+      <link rel="alternate" hreflang="{{ lang_code }}" href="{{ site.url }}{{ translated_page.url | relative_url }}" />
+    {% endif %}
+  {% endfor %}
+  
+  {% comment %} Add x-default for language selection page {% endcomment %}
+  <link rel="alternate" hreflang="x-default" href="{{ site.url }}/" />
+{% else %}
+  {% comment %} For pages without ref, link to language home pages {% endcomment %}
+  {% for lang_data in languages %}
+    {% assign lang_code = lang_data[0] %}
+    <link rel="alternate" hreflang="{{ lang_code }}" href="{{ site.url }}/{{ lang_code }}/" />
+  {% endfor %}
+  
+  <link rel="alternate" hreflang="x-default" href="{{ site.url }}/" />
+{% endif %}
+
+{% comment %} Add canonical URL {% endcomment %}
+<link rel="canonical" href="{{ site.url }}{{ page.url | relative_url }}" />
+
+{% comment %} Add language meta tag {% endcomment %}
+<meta property="og:locale" content="{% if page.lang == 'zh' %}zh_CN{% else %}en_US{% endif %}" />
+
+{% comment %} Add alternate locales for Open Graph {% endcomment %}
+{% if page.ref %}
+  {% for lang_data in languages %}
+    {% assign lang_code = lang_data[0] %}
+    {% if lang_code != page.lang %}
+      {% assign translated_page = pages_with_ref | where: "lang", lang_code | first %}
+      {% if translated_page %}
+        <meta property="og:locale:alternate" content="{% if lang_code == 'zh' %}zh_CN{% else %}en_US{% endif %}" />
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endif %}

@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    
+    {% comment %} I18n SEO enhancements {% endcomment %}
+    {% include i18n-seo.html %}
+    
     {% seo %}
+    {% include alternate-languages.html %}
     <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
     {% feed_meta %}
 </head>
@@ -17,6 +22,7 @@
     
     {% include footer.html %}
     
+    <script src="{{ '/assets/js/i18n.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
 </body>
 </html>

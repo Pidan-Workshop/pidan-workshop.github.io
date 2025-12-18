@@ -1,0 +1,31 @@
+{% comment %}
+  I18n Helper Functions
+  Provides translation with fallback support
+{% endcomment %}
+
+{% comment %} 
+  Usage: {% include i18n-helpers.html key="translation_key" fallback="Default Text" %}
+  Assigns the result to variable: i18n_result
+{% endcomment %}
+
+{% assign t = site.data.translations[page.lang] %}
+{% assign default_t = site.data.translations[site.data.languages.keys.first | default: 'en'] %}
+
+{% if include.key %}
+  {% assign translation = t[include.key] %}
+  
+  {% if translation and translation != "" %}
+    {% assign i18n_result = translation %}
+  {% elsif include.fallback %}
+    {% assign i18n_result = include.fallback %}
+  {% else %}
+    {% assign default_translation = default_t[include.key] %}
+    {% if default_translation and default_translation != "" %}
+      {% assign i18n_result = default_translation %}
+    {% else %}
+      {% assign i18n_result = include.key %}
+    {% endif %}
+  {% endif %}
+{% else %}
+  {% assign i18n_result = "" %}
+{% endif %}

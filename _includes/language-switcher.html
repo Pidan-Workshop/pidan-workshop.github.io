@@ -1,6 +1,6 @@
 {% assign languages = site.data.languages %}
 
-<div class="language-switcher">
+<div class="language-switcher" role="navigation" aria-label="Language switcher">
     {% for lang_data in languages %}
         {% assign lang_code = lang_data[0] %}
         {% assign lang_info = lang_data[1] %}
@@ -14,26 +14,32 @@
                 {% if translated_page %}
                     <a href="{{ translated_page.url | relative_url }}" 
                        lang="{{ lang_code }}" 
+                       data-lang-switch="{{ lang_code }}"
                        class="lang-link"
-                       title="{{ lang_info.name }}">
-                        <span class="flag">{{ lang_info.flag }}</span>
+                       title="{{ lang_info.name }}"
+                       aria-label="Switch to {{ lang_info.name }}">
+                        <span class="flag" aria-hidden="true">{{ lang_info.flag }}</span>
                         <span class="lang-name">{{ lang_info.name }}</span>
                     </a>
                 {% else %}
                     <a href="/{{ lang_code }}/" 
                        lang="{{ lang_code }}" 
+                       data-lang-switch="{{ lang_code }}"
                        class="lang-link"
-                       title="{{ lang_info.name }}">
-                        <span class="flag">{{ lang_info.flag }}</span>
+                       title="{{ lang_info.name }}"
+                       aria-label="Switch to {{ lang_info.name }}">
+                        <span class="flag" aria-hidden="true">{{ lang_info.flag }}</span>
                         <span class="lang-name">{{ lang_info.name }}</span>
                     </a>
                 {% endif %}
             {% else %}
                 <a href="/{{ lang_code }}/" 
                    lang="{{ lang_code }}" 
+                   data-lang-switch="{{ lang_code }}"
                    class="lang-link"
-                   title="{{ lang_info.name }}">
-                    <span class="flag">{{ lang_info.flag }}</span>
+                   title="{{ lang_info.name }}"
+                   aria-label="Switch to {{ lang_info.name }}">
+                    <span class="flag" aria-hidden="true">{{ lang_info.flag }}</span>
                     <span class="lang-name">{{ lang_info.name }}</span>
                 </a>
             {% endif %}

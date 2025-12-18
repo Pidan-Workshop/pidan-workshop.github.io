@@ -1,0 +1,13 @@
+# Robots.txt for Pidan Workshop
+# https://pidanworshop.github.io
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://pidanworshop.github.io/sitemap.xml
+
+# Disallow common admin/system paths
+Disallow: /assets/
+Disallow: /_site/
+Disallow: /.git/

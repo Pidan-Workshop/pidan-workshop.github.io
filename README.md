@@ -99,11 +99,71 @@ Your content here...
 
 ## 🌍 Internationalization
 
-This site uses a manual i18n approach with:
-- Separate directories for each language (`/en/`, `/zh/`)
-- Translation data files in `_data/translations.yml`
-- Language switcher component for easy navigation
-- Consistent `ref` values for linking translated content
+This site uses a mature i18n system with the following features:
+
+### Core Components
+
+1. **Language Data Structure**
+   - Separate directories for each language (`/en/`, `/zh/`)
+   - Centralized translations in `_data/translations.yml`
+   - Language metadata in `_data/languages.yml`
+
+2. **Automatic Features**
+   - Auto-detection of browser language on landing page
+   - Language preference persistence via localStorage
+   - SEO-friendly alternate language tags
+   - Language switcher with page-specific linking
+
+3. **Content Linking**
+   - Use `ref` in page front matter to link translations
+   - Example:
+     ```yaml
+     ---
+     title: About
+     lang: en
+     ref: about
+     ---
+     ```
+
+### Adding a New Language
+
+1. Add language to `_data/languages.yml`:
+   ```yaml
+   fr:
+     name: "Français"
+     flag: "🇫🇷"
+   ```
+
+2. Add translations to `_data/translations.yml`:
+   ```yaml
+   fr:
+     nav_home: "Accueil"
+     # ... other translations
+   ```
+
+3. Create language-specific pages in `/fr/` directory
+
+4. Update `_config.yml` defaults:
+   ```yaml
+   defaults:
+     - scope:
+         path: "fr"
+       values:
+         lang: "fr"
+   ```
+
+### Using Translations
+
+In your layouts and pages:
+```liquid
+{% assign t = site.data.translations[page.lang] %}
+<h1>{{ t.nav_home }}</h1>
+```
+
+Or use the i18n helper:
+```liquid
+{% include i18n-helper.html key="nav_home" %}
+```
 
 ## 🚀 Deployment
 

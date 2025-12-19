@@ -30,14 +30,14 @@
    - 学习开发工作流
 
 3. **开始开发**：
+   
+   **Windows (PowerShell):**
+   ```powershell
+   .\build.ps1 dev
+   ```
+   
+   **macOS/Linux:**
    ```bash
-   # 克隆仓库
-   git clone https://github.com/Pidan-Workshop/pidan-workshop.github.io.git
-   
-   # 安装依赖
-   bundle install
-   
-   # 生成页面并启动开发服务器
    make dev
    ```
 
@@ -47,7 +47,7 @@
 
 - [../README.md](../README.md) - 项目主文档
 - [../CHANGELOG.md](../CHANGELOG.md) - 版本变更日志
-- [../GAME_INTEGRATION.md](../GAME_INTEGRATION.md) - 游戏集成指南
+- [./GAME_INTEGRATION.md](./GAME_INTEGRATION.md) - 游戏集成指南
 
 ### 提示文件
 
@@ -72,14 +72,37 @@
 
 ## 💡 常用命令
 
-```bash
-# 生成语言特定页面
-make generate
-# 或
-ruby scripts/generate_pages.rb
+### Windows (PowerShell):
+```powershell
+# 启动开发服务器（自动生成页面并监听变化）
+.\build.ps1 dev
 
-# 启动开发服务器
+# 从模板生成语言特定页面
+.\build.ps1 generate
+
+# 启动服务器（不监听模板）
+.\build.ps1 serve
+
+# 构建生产版本
+.\build.ps1 build
+
+# 清理生成文件
+.\build.ps1 clean
+
+# 查看帮助
+.\build.ps1 help
+```
+
+### macOS/Linux:
+```bash
+# 启动开发服务器（自动生成页面并监听变化）
 make dev
+
+# 从模板生成语言特定页面
+make generate
+
+# 启动服务器（不监听模板）
+make serve
 
 # 构建生产版本
 make build
@@ -87,7 +110,7 @@ make build
 # 清理生成文件
 make clean
 
-# 查看所有可用命令
+# 查看帮助
 make help
 ```
 

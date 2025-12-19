@@ -114,65 +114,136 @@ Your content here...
    bundle install
    ```
 
-3. **Generate multi-language pages from templates**:
+3. **Start the development server** (automatically generates pages and watches for changes):
+   
+   **On Windows (PowerShell):**
+   ```powershell
+   .\build.ps1 dev
+   ```
+   
+   **On macOS/Linux:**
    ```bash
-   ruby scripts/generate_pages.rb
+   make dev
    ```
 
-4. Run Jekyll locally:
-   ```bash
-   bundle exec jekyll serve
-   ```
+4. Visit `http://localhost:4000`
 
-5. Visit `http://localhost:4000`
+### Build Commands Reference
+
+#### For Windows (PowerShell):
+```powershell
+# Development with auto-regeneration
+.\build.ps1 dev
+
+# Generate pages from templates
+.\build.ps1 generate
+
+# Start server only (no template watching)
+.\build.ps1 serve
+
+# Build for production
+.\build.ps1 build
+
+# Clean generated files
+.\build.ps1 clean
+
+# Show help
+.\build.ps1 help
+```
+
+#### For macOS/Linux:
+```bash
+# Development with auto-regeneration
+make dev
+
+# Generate pages from templates
+make generate
+
+# Start server only
+make serve
+
+# Build for production
+make build
+
+# Clean generated files
+make clean
+
+# Show help
+make help
+```
 
 ### Important: Template-Based Architecture
 
-This site uses a **single-file multi-language architecture**:
+This site uses a **template + locale** multi-language architecture:
 
 - **Edit templates** in `_templates/` directory (NOT `en/` or `zh/` directly)
-- **Run generation script** to create language-specific files:
-  ```bash
-  ruby scripts/generate_pages.rb
-  ```
+- **Define multi-language content** in `_locale/` directory (YAML files)
+- **Run build commands** to generate language-specific files
 - **Files in `en/` and `zh/`** are auto-generated and git-ignored
 
 ### Making Changes to Pages
 
-1. Edit the template file in `_templates/`:
+1. Edit the template in `_templates/`:
    ```bash
-   # Example: edit homepage
-   _templates/index.html
+   # Example: edit about page
+   _templates/about/index.html
    ```
 
-2. Run the generation script:
+2. Add or edit language content in `_locale/`:
    ```bash
-   ruby scripts/generate_pages.rb
+   # Example: edit about page translations
+   _locale/about/index.yml
    ```
 
-3. Preview changes:
+3. Run the appropriate command:
+   ```powershell
+   # Windows
+   .\build.ps1 dev
+   ```
    ```bash
-   bundle exec jekyll serve
+   # macOS/Linux
+   make dev
    ```
 
-### Adding New Page Titles
+4. The generated pages will be automatically created and available at:
+   - English: `http://localhost:4000/en/about/`
+   - Chinese: `http://localhost:4000/zh/about/`
 
-When creating a new page template with a new `ref` value:
+### Adding New Static Pages
 
-1. Add the page title to `_locale/page_titles.yml`:
-   ```yaml
-   new-page:
-     en: "New Page Title"
-     zh: "新页面标题"
-   ```
+When creating a new static page:
 
-2. Create the template in `_templates/` with the matching `ref`:
+1. Create a template in `_templates/new-page/index.html`:
    ```yaml
    ---
    layout: default
    ref: new-page
    ---
    ```
+
+2. Create language content in `_locale/new-page/index.yml`:
+   ```yaml
+   title:
+     en: "New Page Title"
+     zh: "新页面标题"
+   content:
+     en: "Your English content here"
+     zh: "你的中文内容"
+   ```
+
+3. Run the generate command:
+   ```powershell
+   # Windows
+   .\build.ps1 generate
+   ```
+   ```bash
+   # macOS/Linux
+   make generate
+   ```
+
+4. The page will be generated at:
+   - `/en/new-page/`
+   - `/zh/new-page/`
 
 ## 🌍 Internationalization
 
@@ -186,14 +257,14 @@ This site uses a **template-based multi-language system**:
 - **Build script** (`scripts/generate_pages.rb`) generates all language versions
 
 
-### Automated Build Process
+### Automated Deployment
 
 The GitHub Actions workflow (`.github/workflows/pages.yml`) automatically:
-1. Runs `ruby scripts/generate_pages.rb` to generate language-specific pages
+1. Generates language-specific pages from templates
 2. Builds the Jekyll site
 3. Deploys to GitHub Pages
 
-**No manual generation needed** - just push your template changes to `main` branch
+**No manual generation needed** - just commit and push your changes to the `main` branch
 ### How It Works
 1. Templates in `_templates/` contain only `layout` and `ref` in front matter (no `lang` or `title`)
 2. Generation script reads templates and creates language-specific files

@@ -16,11 +16,16 @@ generate:
 	@echo "Generating pages from templates..."
 	ruby scripts/generate_pages.rb
 
+clean-languages:
+	@echo "Cleaning up temporary language directories..."
+	rm -rf en/
+	rm -rf zh/
+
 dev: generate
 	@echo "Starting development environment..."
 	@echo "Jekyll will serve at http://localhost:4000"
 	@echo ""
-	bundle exec jekyll serve --livereload
+	@bundle exec jekyll serve --livereload; $(MAKE) clean-languages
 
 serve:
 	@echo "Starting Jekyll server..."
@@ -29,10 +34,10 @@ serve:
 build: generate
 	@echo "Building site for production..."
 	bundle exec jekyll build
+	$(MAKE) clean-languages
 
 clean:
 	@echo "Cleaning generated files..."
 	rm -rf _site
-	rm -rf en/
-	rm -rf zh/
+	$(MAKE) clean-languages
 	@echo "Done!"

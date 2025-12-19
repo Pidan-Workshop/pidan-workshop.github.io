@@ -2,39 +2,61 @@
 
 ## [2.0.0] - 2025-12-19
 
-### 🎉 Major Architecture Refactor: Single-File Multi-Language System
+### 🎉 Major Architecture Refactor: Template + Locale Multi-Language System
 
 #### Added
 - **Template System**: New `_templates/` directory for single-source page templates
-- **Locale System**: New `_locale/` directory for modular translations
-  - `_locale/page_titles.yml` for page title translations
-- **Build Scripts**:
-  - `scripts/generate_pages.rb` - Main page generation script with validation
-  - `scripts/watch.rb` - Development watcher for auto-regeneration (optional)
+- **Locale System**: New `_locale/` directory for modular, language-specific content
+  - YAML-based multi-language content organization
+  - Hierarchical structure matching page categories
+- **Build Automation**:
+  - `scripts/generate_pages.rb` - Page generation script with validation
+  - `build.ps1` - Windows PowerShell build script with commands: `dev`, `generate`, `serve`, `build`, `clean`
+  - `Makefile` - Cross-platform build commands for macOS/Linux
 - **Development Tools**:
-  - `Makefile` with convenient commands (`make dev`, `make generate`, etc.)
+  - Automated page generation from templates + locale files
+  - Live reload with `--livereload` flag
 - **Documentation**:
   - `docs/ARCHITECTURE.md` - Comprehensive architecture guide
-  - Updated `README.md` with new workflow instructions
-- **CI/CD**: GitHub Actions workflow (`.github/workflows/pages.yml`) for automated builds
+  - `docs/LOCALE_STRUCTURE.md` - Locale file structure documentation
+  - `docs/IMPLEMENTATION_SUMMARY.md` - Implementation details
+  - Updated `README.md` with new workflow and build commands
+- **CI/CD**: GitHub Actions workflow for automated builds and deployment
 
 #### Changed
 - **Breaking**: Pages in `en/` and `zh/` are now auto-generated (not version controlled)
-- **Workflow**: Developers now edit `_templates/` instead of language-specific directories
+- **Workflow**: Developers edit `_templates/` and `_locale/` instead of language-specific directories
+- **Build Process**: Introduction of `build.ps1` (Windows) and `Makefile` (Unix-like systems)
 - `.gitignore` updated to exclude generated `en/` and `zh/` directories
-- Build process now includes template generation step before Jekyll build
+- Content is now split between templates (structure) and locale files (translations)
+
+#### Build Commands
+**Windows (PowerShell):**
+- `.\build.ps1 dev` - Development with auto-regeneration
+- `.\build.ps1 generate` - Generate pages from templates
+- `.\build.ps1 serve` - Jekyll server only
+- `.\build.ps1 build` - Production build
+- `.\build.ps1 clean` - Clean generated files
+
+**macOS/Linux (Makefile):**
+- `make dev` - Development with auto-regeneration
+- `make generate` - Generate pages from templates
+- `make serve` - Jekyll server only
+- `make build` - Production build
+- `make clean` - Clean generated files
 
 #### Benefits
-- ✅ Reduced maintenance: 10 duplicate files → 5 template files
+- ✅ Reduced maintenance: 10 duplicate files → 5 template files + 5 locale files
 - ✅ Single source of truth for page content
 - ✅ Automatic consistency across all languages
-- ✅ Easy to add new languages (just update translation files)
+- ✅ Easy to add new languages (just update locale files)
 - ✅ No Jekyll plugins needed (GitHub Pages compatible)
-- ✅ Clear separation between content (templates) and translations (locale)
+- ✅ Clear separation between structure (templates) and content (locale)
+- ✅ Cross-platform build support (Windows, macOS, Linux)
 
 #### Migration Notes
 - Existing `en/` and `zh/` files are preserved but should not be edited directly
-- Run `ruby scripts/generate_pages.rb` to regenerate from templates
+- Run `.\build.ps1 generate` (Windows) or `make generate` (Unix-like) to regenerate
 - Blog posts in `_posts/en/` and `_posts/zh/` remain unchanged
 
 ---

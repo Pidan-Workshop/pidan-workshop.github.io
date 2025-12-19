@@ -99,9 +99,16 @@ assets/images/games/your-game-thumb.jpg
 
 ### 6. Test Locally
 
-Run Jekyll locally to test:
+Run the development server:
+
+**Windows (PowerShell):**
+```powershell
+.\build.ps1 dev
+```
+
+**macOS/Linux:**
 ```bash
-bundle exec jekyll serve
+make dev
 ```
 
 Visit: `http://localhost:4000/games/your-game-name/`

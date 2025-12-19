@@ -327,5 +327,5 @@ Content here...
 ## 相关文件
 
 - 主文档：[README.md](../README.md)
-- 游戏集成：[GAME_INTEGRATION.md](../GAME_INTEGRATION.md)
+- 游戏集成：[GAME_INTEGRATION.md](./GAME_INTEGRATION.md)
 - 工作流配置：[.github/workflows/pages.yml](../.github/workflows/pages.yml)

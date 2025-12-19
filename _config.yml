@@ -35,12 +35,14 @@ defaults:
     values:
       lang: "en"
       layout: "post"
+      permalink: /en/blog/:year/:month/:day/:title/
   - scope:
       path: "_posts/zh"
       type: "posts"
     values:
       lang: "zh"
       layout: "post"
+      permalink: /zh/blog/:year/:month/:day/:title/
   - scope:
       path: "en"
     values:

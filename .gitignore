@@ -7,3 +7,10 @@ node_modules/
 vendor/
 .DS_Store
 *.log
+
+# 生成的语言文件（从 _templates/ 生成）
+/en/
+/zh/
+
+# 但保留 _posts/ 下的语言目录
+!/_posts/

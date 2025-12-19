@@ -23,22 +23,34 @@ Visit us at: [https://pidanworshop.github.io](https://pidanworshop.github.io)
 ├── _data/               # Data files (translations, games metadata)
 ├── _includes/           # Reusable components (header, footer, etc.)
 ├── _layouts/            # Page layouts
+├── _locale/             # Page title translations
+│   └── page_titles.yml
+├── _templates/          # Multi-language page templates (source)
+│   ├── index.html
+│   ├── about/
+│   ├── games/
+│   ├── blog/
+│   └── products/
 ├── _posts/              # Blog posts
 │   ├── en/             # English posts
 │   └── zh/             # Chinese posts
+├── scripts/             # Build scripts
+│   └── generate_pages.rb  # Generate language pages from templates
 ├── assets/              # Static assets (CSS, JS, images)
-├── en/                  # English pages
+├── en/                  # English pages (auto-generated)
 │   ├── index.html
 │   ├── games/
 │   ├── products/
 │   ├── blog/
 │   └── about/
-├── zh/                  # Chinese pages
+├── zh/                  # Chinese pages (auto-generated)
 │   └── [same structure as en/]
 ├── games/               # Individual game directories
 │   └── sample-game/    # Each game has its own folder
 └── index.html          # Language selection landing page
 ```
+
+**Note**: Files in `en/` and `zh/` are auto-generated from `_templates/` and excluded from version control.
 
 ## 🎮 Adding a New Game
 
@@ -85,25 +97,115 @@ Your content here...
 
 ## 🛠️ Local Development
 
-1. Install Ruby and Bundler
-2. Clone this repository
-3. Install dependencies:
+### Prerequisites
+- Ruby 3.1+ and Bundler installed
+- Git
+
+### Setup and Run
+
+1. Clone this repository
+   ```bash
+   git clone https://github.com/Pidan-Workshop/pidan-workshop.github.io.git
+   cd pidan-workshop.github.io
+   ```
+
+2. Install dependencies:
    ```bash
    bundle install
    ```
+
+3. **Generate multi-language pages from templates**:
+   ```bash
+   ruby scripts/generate_pages.rb
+   ```
+
 4. Run Jekyll locally:
    ```bash
    bundle exec jekyll serve
    ```
+
 5. Visit `http://localhost:4000`
+
+### Important: Template-Based Architecture
+
+This site uses a **single-file multi-language architecture**:
+
+- **Edit templates** in `_templates/` directory (NOT `en/` or `zh/` directly)
+- **Run generation script** to create language-specific files:
+  ```bash
+  ruby scripts/generate_pages.rb
+  ```
+- **Files in `en/` and `zh/`** are auto-generated and git-ignored
+
+### Making Changes to Pages
+
+1. Edit the template file in `_templates/`:
+   ```bash
+   # Example: edit homepage
+   _templates/index.html
+   ```
+
+2. Run the generation script:
+   ```bash
+   ruby scripts/generate_pages.rb
+   ```
+
+3. Preview changes:
+   ```bash
+   bundle exec jekyll serve
+   ```
+
+### Adding New Page Titles
+
+When creating a new page template with a new `ref` value:
+
+1. Add the page title to `_locale/page_titles.yml`:
+   ```yaml
+   new-page:
+     en: "New Page Title"
+     zh: "新页面标题"
+   ```
+
+2. Create the template in `_templates/` with the matching `ref`:
+   ```yaml
+   ---
+   layout: default
+   ref: new-page
+   ---
+   ```
 
 ## 🌍 Internationalization
 
-This site uses a manual i18n approach with:
-- Separate directories for each language (`/en/`, `/zh/`)
-- Translation data files in `_data/translations.yml`
-- Language switcher component for easy navigation
-- Consistent `ref` values for linking translated content
+This site uses a **template-based multi-language system**:
+
+### Architecture Overview
+- **Single source templates** in `_templates/` directory
+- **Language-specific files** auto-generated to `en/` and `zh/`
+- **Translation data** in `_data/translations.yml` for UI strings
+- **Page titles** in `_locale/page_titles.yml`
+- **Build script** (`scripts/generate_pages.rb`) generates all language versions
+
+
+### Automated Build Process
+
+The GitHub Actions workflow (`.github/workflows/pages.yml`) automatically:
+1. Runs `ruby scripts/generate_pages.rb` to generate language-specific pages
+2. Builds the Jekyll site
+3. Deploys to GitHub Pages
+
+**No manual generation needed** - just push your template changes to `main` branch
+### How It Works
+1. Templates in `_templates/` contain only `layout` and `ref` in front matter (no `lang` or `title`)
+2. Generation script reads templates and creates language-specific files
+3. Each generated file gets appropriate `lang` and `title` from `_locale/page_titles.yml`
+4. Language switcher component links translations using `ref` values
+
+### Benefits
+- ✅ Single source of truth for page content
+- ✅ No duplicate HTML files to maintain
+- ✅ Easy to add new languages
+- ✅ Automatic consistency across translations
+- ✅ Works with GitHub Pages (no custom plugins needed)
 
 ## 🚀 Deployment
 

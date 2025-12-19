@@ -1,17 +1,16 @@
 ---
 layout: default
-title: 皮蛋工作室
-lang: zh
 ref: home
+lang: zh
+title: 皮蛋工作室
 ---
-
 {% assign t = site.data.translations[page.lang] %}
 
 <section class="hero">
     <div class="container">
         <h1 class="hero-title">{{ t.hero_title }}</h1>
         <p class="hero-subtitle">{{ t.hero_subtitle }}</p>
-        <a href="{{ '/zh/games/' | relative_url }}" class="btn btn-primary">{{ t.hero_cta }}</a>
+        <a href="{{ '/en/games/' | relative_url }}" class="btn btn-primary">{{ t.hero_cta }}</a>
     </div>
 </section>
 
@@ -35,7 +34,7 @@ ref: home
             {% endfor %}
         </div>
         <div class="text-center">
-            <a href="{{ '/zh/games/' | relative_url }}" class="btn btn-secondary">{{ t.learn_more }}</a>
+            <a href="{{ '/en/games/' | relative_url }}" class="btn btn-secondary">{{ t.learn_more }}</a>
         </div>
     </div>
 </section>
@@ -49,19 +48,18 @@ ref: home
             {% for post in posts %}
             <article class="post-card">
                 <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-                <p class="post-meta">{{ post.date | date: "%Y年%m月%d日" }}</p>
-                <p>{{ post.excerpt }}</p>
-                <a href="{{ post.url | relative_url }}">{{ t.read_more }}</a>
+                <div class="post-meta">
+                    <time datetime="{{ post.date | date_to_xmlschema }}">
+                        {{ post.date | date: "%B %d, %Y" }}
+                    </time>
+                </div>
+                <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+                <a href="{{ post.url | relative_url }}" class="read-more">{{ t.read_more }} →</a>
             </article>
             {% endfor %}
         </div>
-        <div class="text-center" style="margin-top: 2rem;">
-            <a href="{{ '/zh/blog/' | relative_url }}" class="btn btn-secondary">查看所有文章</a>
-        </div>
         {% else %}
-        <div class="no-content">
-            <p>📝 暂无博客文章，敬请期待更新！</p>
-        </div>
+        <p>{{ t.no_posts }}</p>
         {% endif %}
     </div>
 </section>

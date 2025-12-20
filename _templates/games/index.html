@@ -3,12 +3,10 @@ layout: default
 ref: games
 ---
 
-{% assign t = site.data.translations[page.lang] %}
-
 <section class="page-header">
     <div class="container">
-        <h1>{{ t.games_title }}</h1>
-        <p>{{ t.games_subtitle }}</p>
+        <h1>{{ page.common.games_title }}</h1>
+        <p>{{ page.common.games_subtitle }}</p>
     </div>
 </section>
 
@@ -31,7 +29,7 @@ ref: games
                             {% endfor %}
                         </div>
                     </div>
-                    <a href="/{{ page.lang }}/games/{{ game.id }}/" class="btn btn-primary">{{ t.play_now }}</a>
+                    <a href="/{{ page.lang }}/games/{{ game.id }}/" class="btn btn-primary">{{ page.common.play_now }}</a>
                 </div>
             </div>
             {% endfor %}

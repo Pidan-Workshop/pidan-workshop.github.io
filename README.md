@@ -21,10 +21,11 @@ Visit us at: [https://pidanworshop.github.io](https://pidanworshop.github.io)
 ```
 .
 ├── _config.yml          # Jekyll configuration
-├── _data/               # Data files (translations, games metadata)
+├── _data/               # Data files (games metadata, languages)
 ├── _includes/           # Reusable components (header, footer, etc.)
 ├── _layouts/            # Page layouts
 ├── _locale/             # Multi-language translation data (YAML)
+│   ├── common.yml       # 🌍 Global translations (nav, footer, buttons)
 │   ├── index.yml
 │   ├── about/
 │   ├── games/
@@ -224,8 +225,8 @@ This site uses a **Jekyll plugin-based multi-language system**:
 ### Architecture Overview
 - **Single source templates** in `_templates/` directory
 - **Translation data** in `_locale/` directory (organized by page)
+- **Global translations** in `_locale/common.yml` (nav, footer, buttons)
 - **Plugin auto-generation** during Jekyll build to `_site/en/` and `_site/zh/`
-- **Global UI strings** in `_data/translations.yml`
 
 For detailed information, see [docs/PLUGIN_ARCHITECTURE.md](docs/PLUGIN_ARCHITECTURE.md)
 

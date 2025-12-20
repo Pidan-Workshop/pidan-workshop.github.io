@@ -29,6 +29,9 @@ module Jekyll
       @locale_data = load_locale_data
       Jekyll.logger.info "LocaleGenerator:", "Loaded #{@locale_data.keys.size} locale files"
       
+      # 加载 common.yml 并注入到 site.data
+      load_common_translations
+      
       # 处理所有模板文件
       template_files = find_template_files
       Jekyll.logger.info "LocaleGenerator:", "Found #{template_files.size} template files"
@@ -46,6 +49,42 @@ module Jekyll
 
     private
 
+    # 加载 common.yml 翻译并转换为旧格式注入到 site.data
+    def load_common_translations
+      common_file = File.join(@site.source, '_locale', 'common.yml')
+      
+      unless File.exist?(common_file)
+        Jekyll.logger.warn "LocaleGenerator:", "No common.yml found, creating empty translations"
+        @site.data['translations'] = {}
+        @languages.each { |lang| @site.data['translations'][lang] = {} }
+        return
+      end
+      
+      begin
+        common_data = YAML.load_file(common_file)
+        
+        # 转换为 site.data.translations[lang][key] 格式
+        translations = {}
+        @languages.each do |lang|
+          translations[lang] = {}
+        end
+        
+        common_data.each do |key, value|
+          if value.is_a?(Hash)
+            @languages.each do |lang|
+              translations[lang][key] = value[lang] if value[lang]
+            end
+          end
+        end
+        
+        @site.data['translations'] = translations
+        Jekyll.logger.info "LocaleGenerator:", "Loaded common translations with #{common_data.keys.size} keys"
+      rescue => e
+        Jekyll.logger.error "LocaleGenerator:", "Error loading common.yml: #{e.message}"
+        @site.data['translations'] = {}
+      end
+    end
+
     # 加载所有 locale 数据
     def load_locale_data
       locale_data = {}
@@ -53,7 +92,11 @@ module Jekyll
       
       return locale_data unless Dir.exist?(locale_dir)
       
+      # 排除 common.yml（它单独处理）
       Dir.glob(File.join(locale_dir, '**', '*.yml')).each do |file|
+        # 跳过 common.yml
+        next if File.basename(file) == 'common.yml' && File.dirname(file) == locale_dir
+        
         relative_path = file.sub("#{locale_dir}/", '')
         ref = compute_ref_from_path(relative_path)
         
@@ -147,6 +190,8 @@ module Jekyll
       new_front_matter['title'] = title
       # 将 locale 数据存储在 page_locale 而不是 locale，避免与 seo-tag 冲突
       new_front_matter['page_locale'] = locale_data
+      # 注入 common translations 到每个页面
+      new_front_matter['common'] = @site.data['translations'][lang]
       
       # 计算 permalink
       # 例如：about/index.html -> /en/about/ 或 /zh/about/
@@ -209,7 +254,8 @@ module Jekyll
         'title' => title,
         'game_id' => game_id,
         'ref' => 'games/game-detail',
-        'page_locale' => locale_data
+        'page_locale' => locale_data,
+        'common' => @site.data['translations'][lang]
       }
       
       # 计算 permalink

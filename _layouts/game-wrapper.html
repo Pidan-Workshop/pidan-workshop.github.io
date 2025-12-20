@@ -12,7 +12,6 @@
     {% include header.html %}
     
     <main class="content">
-        {% assign t = site.data.translations[page.lang] %}
         {% assign game_detail_t = page.page_locale %}
         {% assign game = site.data.games | where: "id", page.game_id | first %}
         

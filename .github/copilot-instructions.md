@@ -52,7 +52,7 @@ bundle install
 
 ## 关键规则
 
-- **模板中翻译**：`{% assign t = site.data.translations[page.lang] %}` 然后 `{{ t.key }}`
+- **模板中翻译**：页面级翻译使用 `{{ page.locale.key }}`；全局通用翻译使用 `{{ page.common.key }}`
 - **URL 构建**：始终包含语言段：`/{{ page.lang }}/games/`
 - **生成目录**：`_site/en/` 和 `_site/zh/` 由插件自动生成，勿手动编辑
 - **游戏元数据**：所有字段必需，含 `id`、`title`、`description`、`path`、`thumbnail`、`release_date`、`tags`、`featured`

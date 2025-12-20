@@ -7,6 +7,3 @@ node_modules/
 vendor/
 .DS_Store
 *.log
-
-# 注意：现在使用 _plugins 方案，页面直接生成到 _site
-# 不再需要排除 /en/ 和 /zh/ 目录

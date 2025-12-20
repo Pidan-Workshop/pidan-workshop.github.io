@@ -3,12 +3,10 @@ layout: default
 ref: products
 ---
 
-{% assign t = site.data.translations[page.lang] %}
-
 <section class="page-header">
     <div class="container">
-        <h1>{{ t.products_title }}</h1>
-        <p>{{ t.products_subtitle }}</p>
+        <h1>{{ page.common.products_title }}</h1>
+        <p>{{ page.common.products_subtitle }}</p>
     </div>
 </section>
 

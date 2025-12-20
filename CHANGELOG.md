@@ -1,5 +1,18 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+- **Locale Structure**: Migrated `_data/translations.yml` to `_locale/common.yml` for consistent data structure
+  - All global translations (nav, footer, buttons) now in `_locale/common.yml`
+  - Unified access pattern: `{{ page.common.key }}` instead of `{{ site.data.translations[page.lang].key }}`
+  - Plugin automatically loads common translations and injects into each page
+- **Template Simplification**: Removed `{% assign t = site.data.translations[page.lang] %}` from all templates
+- **Documentation**: Updated all docs to reflect new translation access patterns
+
+### Removed
+- `_data/translations.yml` - replaced by `_locale/common.yml`
+
 ## [2.0.0] - 2025-12-19
 
 ### 🎉 Major Architecture Refactor: Template + Locale Multi-Language System

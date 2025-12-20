@@ -137,18 +137,20 @@ description:
 
 在模板中有两种方式访问翻译：
 
-#### 方式 1：页面级翻译（推荐）
+#### 方式 1：页面级翻译（推荐用于页面特定内容）
 ```liquid
 {{ page.locale.hero_title }}
 {{ page.locale.description }}
 ```
 
-#### 方式 2：全局翻译
+#### 方式 2：全局通用翻译（用于导航、页脚、按钮等）
 ```liquid
-{% assign t = site.data.translations[page.lang] %}
-{{ t.nav_home }}
-{{ t.footer_copyright }}
+{{ page.common.nav_home }}
+{{ page.common.footer_copyright }}
+{{ page.common.play_now }}
 ```
+
+**注意**：插件会自动从 `_locale/common.yml` 加载全局翻译并注入到每个页面的 `page.common` 变量。
 
 ## 配置说明
 

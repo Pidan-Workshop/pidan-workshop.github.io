@@ -3,19 +3,17 @@ layout: default
 ref: home
 ---
 
-{% assign t = site.data.translations[page.lang] %}
-
 <section class="hero">
     <div class="container">
-        <h1 class="hero-title">{{ t.hero_title }}</h1>
-        <p class="hero-subtitle">{{ t.hero_subtitle }}</p>
-        <a href="{{ '/en/games/' | relative_url }}" class="btn btn-primary">{{ t.hero_cta }}</a>
+        <h1 class="hero-title">{{ page.common.hero_title }}</h1>
+        <p class="hero-subtitle">{{ page.common.hero_subtitle }}</p>
+        <a href="{{ '/en/games/' | relative_url }}" class="btn btn-primary">{{ page.common.hero_cta }}</a>
     </div>
 </section>
 
 <section class="featured-games">
     <div class="container">
-        <h2>{{ t.games_title }}</h2>
+        <h2>{{ page.common.games_title }}</h2>
         <div class="games-grid">
             {% for game in site.data.games %}
                 {% if game.featured %}
@@ -26,21 +24,21 @@ ref: home
                     <div class="game-info">
                         <h3>{{ game.title[page.lang] }}</h3>
                         <p>{{ game.description[page.lang] }}</p>
-                        <a href="/{{ page.lang }}/games/{{ game.id }}/" class="btn">{{ t.play_now }}</a>
+                        <a href="/{{ page.lang }}/games/{{ game.id }}/" class="btn">{{ page.common.play_now }}</a>
                     </div>
                 </div>
                 {% endif %}
             {% endfor %}
         </div>
         <div class="text-center">
-            <a href="{{ '/en/games/' | relative_url }}" class="btn btn-secondary">{{ t.learn_more }}</a>
+            <a href="{{ '/en/games/' | relative_url }}" class="btn btn-secondary">{{ page.common.learn_more }}</a>
         </div>
     </div>
 </section>
 
 <section class="recent-posts">
     <div class="container">
-        <h2>{{ t.blog_title }}</h2>
+        <h2>{{ page.common.blog_title }}</h2>
         {% assign posts = site.posts | where: "lang", page.lang | limit: 3 %}
         {% if posts.size > 0 %}
         <div class="posts-grid">

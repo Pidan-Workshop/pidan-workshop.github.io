@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    {% seo %}
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    {% feed_meta %}
+</head>
+<body>
+    {% include header.html %}
+    
+    <main class="content">
+        {% assign t = site.data.translations[page.lang] %}
+        {% assign game_detail_t = site.data.game_detail[page.lang] %}
+        {% assign game = site.data.games | where: "id", page.game_id | first %}
+        
+        <section class="game-detail-header">
+            <div class="container">
+                <a href="/{{ page.lang }}/games/" class="breadcrumb">
+                    ← {{ game_detail_t.back_to_games }}
+                </a>
+                <h1>{{ game.title[page.lang] }}</h1>
+                <p class="game-release">{{ game_detail_t.released }}: {{ game.release_date | date: "%B %d, %Y" }}</p>
+            </div>
+        </section>
+
+        <section class="game-detail-content">
+            <div class="container">
+                <div class="game-detail-grid">
+                    <!-- 左侧：游戏画面容器 -->
+                    <div class="game-display">
+                        <div class="game-iframe-container">
+                            <iframe 
+                                src="{{ game.path }}" 
+                                title="{{ game.title[page.lang] }}"
+                                allowfullscreen
+                                allow="fullscreen"></iframe>
+                        </div>
+                        <button class="fullscreen-btn" data-target="game-iframe-container" aria-label="{{ game_detail_t.fullscreen }}">
+                            <span>{{ game_detail_t.fullscreen }}</span>
+                        </button>
+                    </div>
+                    
+                    <!-- 右侧：游戏信息面板 -->
+                    <div class="game-info-panel">
+                        <div class="game-about">
+                            <h2>{{ game_detail_t.about }}</h2>
+                            <p>{{ game.description[page.lang] }}</p>
+                        </div>
+                        
+                        <div class="game-meta">
+                            <div class="meta-item">
+                                <strong>{{ game_detail_t.tags }}:</strong>
+                                <div class="tags">
+                                    {% for tag in game.tags %}
+                                    <span class="tag">{{ tag }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="{{ game.path }}" class="btn btn-primary" target="_blank">
+                            {{ game_detail_t.play_now }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    {% include footer.html %}
+    
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/game-detail.js' | relative_url }}"></script>
+</body>
+</html>

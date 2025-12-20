@@ -26,7 +26,7 @@ ref: home
                     <div class="game-info">
                         <h3>{{ game.title[page.lang] }}</h3>
                         <p>{{ game.description[page.lang] }}</p>
-                        <a href="{{ game.path }}" class="btn">{{ t.play_now }}</a>
+                        <a href="/{{ page.lang }}/games/{{ game.id }}/" class="btn">{{ t.play_now }}</a>
                     </div>
                 </div>
                 {% endif %}

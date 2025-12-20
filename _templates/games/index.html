@@ -31,7 +31,7 @@ ref: games
                             {% endfor %}
                         </div>
                     </div>
-                    <a href="{{ game.path }}" class="btn btn-primary">{{ t.play_now }}</a>
+                    <a href="/{{ page.lang }}/games/{{ game.id }}/" class="btn btn-primary">{{ t.play_now }}</a>
                 </div>
             </div>
             {% endfor %}

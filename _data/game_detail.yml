@@ -1,0 +1,17 @@
+en:
+  back_to_games: "Back to All Games"
+  about: "About This Game"
+  tags: "Tags"
+  released: "Released"
+  play_now: "Play Now"
+  fullscreen: "Fullscreen"
+  share_game: "Share"
+
+zh:
+  back_to_games: "返回游戏列表"
+  about: "游戏介绍"
+  tags: "标签"
+  released: "发布日期"
+  play_now: "立即体验"
+  fullscreen: "全屏"
+  share_game: "分享"

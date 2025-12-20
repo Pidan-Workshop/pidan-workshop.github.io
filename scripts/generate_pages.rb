@@ -159,24 +159,65 @@ def main
       locale_data = locale_files[ref]
       titles = locale_data['title']
       
-      # 为每种语言生成文件
-      languages.keys.each do |lang|
-        title = titles[lang]
+      # 检查是否是动态模板（如 game-wrapper）
+      if front_matter['dynamic']
+        log_info "Dynamic template detected, generating for each game..."
         
-        unless title
-          log_warning "No title found for ref '#{ref}' in language '#{lang}'"
+        # 加载游戏数据
+        unless File.exist?('_data/games.yml')
+          log_error "games.yml not found, skipping dynamic template generation"
           next
         end
         
-        # 计算输出路径
-        # _templates/index.html -> en/index.html, zh/index.html
-        # _templates/about/index.html -> en/about/index.html, zh/about/index.html
-        relative_path = template_path.sub('_templates/', '')
-        output_path = File.join(lang, relative_path)
+        games = YAML.safe_load(File.read('_data/games.yml'), permitted_classes: [Date, Time])
         
-        # 生成页面
-        generate_page(template_path, output_path, lang, title, front_matter, body)
-        generated_count += 1
+        # 为每个游戏生成页面
+        games.each do |game|
+          game_id = game['id']
+          
+          languages.keys.each do |lang|
+            title = game['title'][lang] || game['title']['en']
+            
+            unless title
+              log_warning "No title found for game '#{game_id}' in language '#{lang}'"
+              next
+            end
+            
+            # 计算输出路径：根据模板位置生成游戏特定的路径
+            # _templates/games/game-detail.html -> en/games/{game_id}/index.html, zh/games/{game_id}/index.html
+            template_dir = File.dirname(template_path).sub('_templates/', '')
+            output_path = File.join(lang, template_dir, game_id, 'index.html')
+            
+            # 添加 game_id 到 front matter
+            game_front_matter = front_matter.dup
+            game_front_matter['game_id'] = game_id
+            
+            # 生成页面
+            generate_page(template_path, output_path, lang, title, game_front_matter, body)
+            generated_count += 1
+          end
+        end
+      else
+        # 常规模板处理
+        # 为每种语言生成文件
+        languages.keys.each do |lang|
+          title = titles[lang]
+          
+          unless title
+            log_warning "No title found for ref '#{ref}' in language '#{lang}'"
+            next
+          end
+          
+          # 计算输出路径
+          # _templates/index.html -> en/index.html, zh/index.html
+          # _templates/about/index.html -> en/about/index.html, zh/about/index.html
+          relative_path = template_path.sub('_templates/', '')
+          output_path = File.join(lang, relative_path)
+          
+          # 生成页面
+          generate_page(template_path, output_path, lang, title, front_matter, body)
+          generated_count += 1
+        end
       end
       
     rescue => e

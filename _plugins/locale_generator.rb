@@ -22,89 +22,40 @@ module Jekyll
       
       @languages = site.data['languages'].keys
       
-      Jekyll.logger.info "LocaleGenerator:", "Starting multi-language page generation..."
-      Jekyll.logger.info "LocaleGenerator:", "Languages: #{@languages.join(', ')}"
+      Jekyll.logger.info "LocaleGenerator:", "Starting multi-language page generation (#{@languages.join(', ')})"
       
-      # 读取所有 locale 文件
-      @locale_data = load_locale_data
-      Jekyll.logger.info "LocaleGenerator:", "Loaded #{@locale_data.keys.size} locale files"
+      # 统一加载所有 locale 和翻译数据
+      @locale_data = load_all_locale_data
+      @common_translations = site.data['translations'] || {}
       
-      # 加载 common.yml 并注入到 site.data
-      load_common_translations
+      # 预构建翻译缓存
+      @translation_cache = {}
       
       # 处理所有模板文件
       template_files = find_template_files
-      Jekyll.logger.info "LocaleGenerator:", "Found #{template_files.size} template files"
+      Jekyll.logger.info "LocaleGenerator:", "Processing #{template_files.size} templates"
       
       @generated_count = 0
-      template_files.each do |template_path|
-        generate_pages_from_template(template_path)
-      end
+      template_files.each { |path| generate_pages_from_template(path) }
       
       # 为每个游戏生成详情页
-      generate_game_detail_pages
+      generate_game_detail_pages if @site.data['games']&.any?
       
       Jekyll.logger.info "LocaleGenerator:", "Generated #{@generated_count} pages"
     end
 
     private
 
-    # 加载 common.yml 和 includes/*.yml 翻译
-    # 返回分层结构：{ 'common' => {...}, 'header' => {...}, 'footer' => {...} }
-    def load_common_translations
-      translations = {
-        'common' => {},
-        'includes' => {}
-      }
-      
-      # 1. 加载 common.yml
-      common_file = File.join(@site.source, '_locale', 'common.yml')
-      if File.exist?(common_file)
-        begin
-          common_data = YAML.load_file(common_file)
-          translations['common'] = common_data
-          Jekyll.logger.info "LocaleGenerator:", "Loaded common.yml with #{common_data.keys.size} keys"
-        rescue => e
-          Jekyll.logger.error "LocaleGenerator:", "Error loading common.yml: #{e.message}"
-        end
-      else
-        Jekyll.logger.warn "LocaleGenerator:", "No common.yml found"
-      end
-      
-      # 2. 加载 includes/*.yml
-      includes_dir = File.join(@site.source, '_locale', 'includes')
-      if Dir.exist?(includes_dir)
-        include_count = 0
-        Dir.glob(File.join(includes_dir, '*.yml')).each do |file|
-          include_name = File.basename(file, '.yml')
-          begin
-            include_data = YAML.load_file(file)
-            translations['includes'][include_name] = include_data
-            
-            include_count += 1
-            Jekyll.logger.debug "LocaleGenerator:", "Loaded #{include_name}.yml with #{include_data.keys.size} keys"
-          rescue => e
-            Jekyll.logger.error "LocaleGenerator:", "Error loading #{file}: #{e.message}"
-          end
-        end
-        Jekyll.logger.info "LocaleGenerator:", "Loaded #{include_count} include translation files"
-      end
-      
-      # 保存到全局供生成页面时使用
-      @common_translations = translations
-    end
-
-    # 加载所有 locale 数据
-    def load_locale_data
+    # 统一加载所有 locale 数据（含 common 和 includes）
+    def load_all_locale_data
       locale_data = {}
       locale_dir = File.join(@site.source, '_locale')
       
       return locale_data unless Dir.exist?(locale_dir)
       
-      # 排除 common.yml（它单独处理）
+      # 跳过 includes 目录（单独处理）
       Dir.glob(File.join(locale_dir, '**', '*.yml')).each do |file|
-        # 跳过 common.yml
-        next if File.basename(file) == 'common.yml' && File.dirname(file) == locale_dir
+        next if file.include?('includes/')
         
         relative_path = file.sub("#{locale_dir}/", '')
         ref = compute_ref_from_path(relative_path)
@@ -112,11 +63,37 @@ module Jekyll
         begin
           data = YAML.load_file(file)
           locale_data[ref] = data
-          Jekyll.logger.debug "LocaleGenerator:", "Loaded locale: #{ref}"
         rescue => e
           Jekyll.logger.error "LocaleGenerator:", "Error loading #{file}: #{e.message}"
         end
       end
+      
+      # 加载所有 includes/*.yml 翻译到全局 translations
+      translations = {}
+      includes_dir = File.join(locale_dir, 'includes')
+      if Dir.exist?(includes_dir)
+        Dir.glob(File.join(includes_dir, '*.yml')).each do |file|
+          begin
+            data = YAML.load_file(file)
+            translations.merge!(data)
+          rescue => e
+            Jekyll.logger.error "LocaleGenerator:", "Error loading include #{file}: #{e.message}"
+          end
+        end
+      end
+      
+      # 加载 common.yml 翻译
+      common_file = File.join(locale_dir, 'common.yml')
+      if File.exist?(common_file)
+        begin
+          translations.merge!(YAML.load_file(common_file))
+        rescue => e
+          Jekyll.logger.error "LocaleGenerator:", "Error loading common.yml: #{e.message}"
+        end
+      end
+      
+      # 保存到 site.data 供 hooks 使用（避免重复加载）
+      @site.data['translations'] = translations
       
       locale_data
     end
@@ -185,134 +162,82 @@ module Jekyll
     # 生成单个语言的页面
     def generate_page(relative_path, lang, front_matter, body, locale_data)
       # 获取标题
-      title_data = locale_data['title']
-      title = title_data ? title_data[lang] : front_matter['title']
-      
-      unless title
-        Jekyll.logger.warn "LocaleGenerator:", "No title for #{relative_path} (#{lang})"
-        title = "Untitled"
-      end
+      title = locale_data['title']&.dig(lang) || front_matter['title'] || "Untitled"
       
       # 构建新的 front matter
       new_front_matter = front_matter.dup
       new_front_matter['lang'] = lang
       new_front_matter['title'] = title
-      
-      # 合并所有翻译到 page.translations
-      new_front_matter['translations'] = build_translations(locale_data, lang)
-      
-      # 计算 permalink
-      # 例如：about/index.html -> /en/about/ 或 /zh/about/
-      dir_path = File.dirname(relative_path)
-      if dir_path == '.'
-        permalink = "/#{lang}/"
-      else
-        permalink = "/#{lang}/#{dir_path}/"
-      end
-      new_front_matter['permalink'] = permalink
+      new_front_matter['permalink'] = compute_permalink(relative_path, lang)
+      new_front_matter['translations'] = build_translations_cached(locale_data, lang)
       
       # 创建 LocalePage 对象
-      page = LocalePage.new(@site, @site.source, lang, relative_path, new_front_matter, body)
-      @site.pages << page
-      
-      @generated_count ||= 0
+      @site.pages << LocalePage.new(@site, @site.source, lang, relative_path, new_front_matter, body)
       @generated_count += 1
-      
-      Jekyll.logger.debug "LocaleGenerator:", "Generated #{lang}/#{relative_path} -> #{permalink}"
     end
     
-    # 构建合并的翻译数据：页面特定 + common + includes
-    def build_translations(locale_data, lang)
+    # 构建合并的翻译数据（缓存以提高性能）
+    def build_translations_cached(locale_data, lang)
+      cache_key = "#{locale_data.object_id}_#{lang}"
+      return @translation_cache[cache_key] if @translation_cache[cache_key]
+      
       translations = {}
       
       # 1. 加载页面特定翻译
       locale_data.each do |key, value|
-        next if key == 'title' # title 已经单独处理
+        translations[key] = value[lang] if key != 'title' && value.is_a?(Hash) && value[lang]
+      end
+      
+      # 2. 加载全局翻译（common + includes）
+      @common_translations.each do |key, value|
         if value.is_a?(Hash) && value[lang]
           translations[key] = value[lang]
         end
       end
       
-      # 2. 加载 common.yml 翻译
-      if @common_translations['common']
-        @common_translations['common'].each do |key, value|
-          translations[key] = value[lang] if value.is_a?(Hash) && value[lang]
-        end
-      end
-      
-      # 3. 加载 includes/*.yml 翻译（扁平化，不使用命名空间）
-      if @common_translations['includes']
-        @common_translations['includes'].each do |component_name, component_data|
-          component_data.each do |key, value|
-            translations[key] = value[lang] if value.is_a?(Hash) && value[lang]
-          end
-        end
-      end
-      
+      @translation_cache[cache_key] = translations
       translations
+    end
+    
+    # 计算 permalink
+    def compute_permalink(relative_path, lang)
+      dir_path = File.dirname(relative_path)
+      if dir_path == '.'
+        "/#{lang}/"
+      else
+        "/#{lang}/#{dir_path}/"
+      end
     end
     
     # 为每个游戏生成详情页
     def generate_game_detail_pages
-      # 检查是否有游戏数据
-      games = @site.data['games']
-      unless games && games.any?
-        Jekyll.logger.warn "LocaleGenerator:", "No games found in _data/games.yml"
-        return
-      end
-      
-      # 获取游戏详情页的 locale 数据
       locale_data = @locale_data['games/game-detail']
       unless locale_data
         Jekyll.logger.error "LocaleGenerator:", "No locale data for 'games/game-detail'"
         return
       end
       
-      Jekyll.logger.info "LocaleGenerator:", "Generating game detail pages for #{games.size} games..."
-      
-      # 为每个游戏生成多语言页面
-      games.each do |game|
-        game_id = game['id']
-        @languages.each do |lang|
-          generate_game_detail_page(game, lang, locale_data)
-        end
+      @site.data['games'].each do |game|
+        @languages.each { |lang| generate_game_detail_page(game, lang, locale_data) }
       end
     end
     
     # 生成单个游戏的详情页
     def generate_game_detail_page(game, lang, locale_data)
-      game_id = game['id']
+      title = game['title']&.dig(lang) || game['id']
       
-      # 获取游戏标题
-      title = game['title'] ? game['title'][lang] : game_id
-      
-      # 构建 front matter
       front_matter = {
         'layout' => 'game-wrapper',
         'lang' => lang,
         'title' => title,
-        'game_id' => game_id,
-        'ref' => 'games/game-detail'
+        'game_id' => game['id'],
+        'ref' => 'games/game-detail',
+        'permalink' => "/#{lang}/games/#{game['id']}/",
+        'translations' => build_translations_cached(locale_data, lang)
       }
       
-      # 合并所有翻译到 page.translations
-      front_matter['translations'] = build_translations(locale_data, lang)
-      
-      # 计算 permalink
-      permalink = "/#{lang}/games/#{game_id}/"
-      front_matter['permalink'] = permalink
-      
-      # 创建页面（空内容，由布局处理）
-      body = ""
-      
-      # 创建 GameDetailPage 对象
-      page = GameDetailPage.new(@site, @site.source, lang, game_id, front_matter, body)
-      @site.pages << page
-      
-      @generated_count ||= 0
+      @site.pages << GameDetailPage.new(@site, @site.source, lang, game['id'], front_matter, "")
       @generated_count += 1
-      
-      Jekyll.logger.debug "LocaleGenerator:", "Generated game detail: #{lang}/games/#{game_id}/"
     end
   end
 
@@ -361,58 +286,28 @@ module Jekyll
     end
   end
   
-  # Hook：为博客文章和其他页面注入翻译
-  class PostTranslationInjector
-    def initialize(site)
-      @site = site
-      @common_translations = {}
-      @locale_data = {}
-      load_translations
-    end
-    
-    def load_translations
-      # 加载 common.yml
-      common_file = File.join(@site.source, '_locale', 'common.yml')
-      if File.exist?(common_file)
-        @common_translations = YAML.load_file(common_file) || {}
-      end
-      
-      # 加载 includes/*.yml
-      includes_dir = File.join(@site.source, '_locale', 'includes')
-      if Dir.exist?(includes_dir)
-        Dir.glob(File.join(includes_dir, '*.yml')).each do |file|
-          include_name = File.basename(file, '.yml')
-          data = YAML.load_file(file) || {}
-          @common_translations.merge!(data)
-        end
-      end
-    end
-    
-    def inject_translations(page)
-      return unless page.data['lang']
-      
-      lang = page.data['lang']
-      translations = page.data['translations'] || {}
-      
-      # 合并 common 翻译
-      @common_translations.each do |key, value|
-        translations[key] = value[lang] if value.is_a?(Hash) && value[lang]
-      end
-      
-      page.data['translations'] = translations
-    end
-  end
-  
-  # 在 Jekyll 处理页面时注入翻译
+  # Hook：为博客文章和其他页面注入翻译（从缓存读取）
   Hooks.register :posts, :pre_render do |post|
-    site = post.site
-    injector = PostTranslationInjector.new(site)
-    injector.inject_translations(post)
+    next unless post.data['lang'] && post.site.data['translations']
+    
+    lang = post.data['lang']
+    translations = post.data['translations'] ||= {}
+    
+    # 合并全局翻译到页面翻译中
+    post.site.data['translations'].each do |key, value|
+      translations[key] = value[lang] if value.is_a?(Hash) && value[lang]
+    end
   end
   
   Hooks.register :pages, :pre_render do |page|
-    site = page.site
-    injector = PostTranslationInjector.new(site)
-    injector.inject_translations(page)
+    next unless page.data['lang'] && page.site.data['translations']
+    
+    lang = page.data['lang']
+    translations = page.data['translations'] ||= {}
+    
+    # 合并全局翻译到页面翻译中
+    page.site.data['translations'].each do |key, value|
+      translations[key] = value[lang] if value.is_a?(Hash) && value[lang]
+    end
   end
 end

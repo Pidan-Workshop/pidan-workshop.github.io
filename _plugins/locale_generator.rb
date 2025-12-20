@@ -38,6 +38,9 @@ module Jekyll
         generate_pages_from_template(template_path)
       end
       
+      # 为每个游戏生成详情页
+      generate_game_detail_pages
+      
       Jekyll.logger.info "LocaleGenerator:", "Generated #{@generated_count} pages"
     end
 
@@ -164,6 +167,67 @@ module Jekyll
       
       Jekyll.logger.debug "LocaleGenerator:", "Generated #{lang}/#{relative_path} -> #{permalink}"
     end
+    
+    # 为每个游戏生成详情页
+    def generate_game_detail_pages
+      # 检查是否有游戏数据
+      games = @site.data['games']
+      unless games && games.any?
+        Jekyll.logger.warn "LocaleGenerator:", "No games found in _data/games.yml"
+        return
+      end
+      
+      # 获取游戏详情页的 locale 数据
+      locale_data = @locale_data['games/game-detail']
+      unless locale_data
+        Jekyll.logger.error "LocaleGenerator:", "No locale data for 'games/game-detail'"
+        return
+      end
+      
+      Jekyll.logger.info "LocaleGenerator:", "Generating game detail pages for #{games.size} games..."
+      
+      # 为每个游戏生成多语言页面
+      games.each do |game|
+        game_id = game['id']
+        @languages.each do |lang|
+          generate_game_detail_page(game, lang, locale_data)
+        end
+      end
+    end
+    
+    # 生成单个游戏的详情页
+    def generate_game_detail_page(game, lang, locale_data)
+      game_id = game['id']
+      
+      # 获取游戏标题
+      title = game['title'] ? game['title'][lang] : game_id
+      
+      # 构建 front matter
+      front_matter = {
+        'layout' => 'game-wrapper',
+        'lang' => lang,
+        'title' => title,
+        'game_id' => game_id,
+        'ref' => 'games/game-detail',
+        'page_locale' => locale_data
+      }
+      
+      # 计算 permalink
+      permalink = "/#{lang}/games/#{game_id}/"
+      front_matter['permalink'] = permalink
+      
+      # 创建页面（空内容，由布局处理）
+      body = ""
+      
+      # 创建 GameDetailPage 对象
+      page = GameDetailPage.new(@site, @site.source, lang, game_id, front_matter, body)
+      @site.pages << page
+      
+      @generated_count ||= 0
+      @generated_count += 1
+      
+      Jekyll.logger.debug "LocaleGenerator:", "Generated game detail: #{lang}/games/#{game_id}/"
+    end
   end
 
   # 自定义页面类
@@ -182,6 +246,27 @@ module Jekyll
       
       # 确保 layout 存在
       self.data['layout'] ||= 'default'
+    end
+    
+    # 读取方法（必需）
+    def read_yaml(*)
+      # 不需要读取，因为我们已经在初始化时设置了内容
+    end
+  end
+  
+  # 游戏详情页类
+  class GameDetailPage < Page
+    def initialize(site, base, lang, game_id, front_matter, body)
+      @site = site
+      @base = base
+      @dir = File.join(lang, 'games', game_id)
+      @name = 'index.html'
+      
+      self.process(@name)
+      
+      # 设置内容
+      self.content = body
+      self.data = front_matter
     end
     
     # 读取方法（必需）

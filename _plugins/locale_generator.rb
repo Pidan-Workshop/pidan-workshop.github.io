@@ -360,4 +360,59 @@ module Jekyll
       # 不需要读取，因为我们已经在初始化时设置了内容
     end
   end
+  
+  # Hook：为博客文章和其他页面注入翻译
+  class PostTranslationInjector
+    def initialize(site)
+      @site = site
+      @common_translations = {}
+      @locale_data = {}
+      load_translations
+    end
+    
+    def load_translations
+      # 加载 common.yml
+      common_file = File.join(@site.source, '_locale', 'common.yml')
+      if File.exist?(common_file)
+        @common_translations = YAML.load_file(common_file) || {}
+      end
+      
+      # 加载 includes/*.yml
+      includes_dir = File.join(@site.source, '_locale', 'includes')
+      if Dir.exist?(includes_dir)
+        Dir.glob(File.join(includes_dir, '*.yml')).each do |file|
+          include_name = File.basename(file, '.yml')
+          data = YAML.load_file(file) || {}
+          @common_translations.merge!(data)
+        end
+      end
+    end
+    
+    def inject_translations(page)
+      return unless page.data['lang']
+      
+      lang = page.data['lang']
+      translations = page.data['translations'] || {}
+      
+      # 合并 common 翻译
+      @common_translations.each do |key, value|
+        translations[key] = value[lang] if value.is_a?(Hash) && value[lang]
+      end
+      
+      page.data['translations'] = translations
+    end
+  end
+  
+  # 在 Jekyll 处理页面时注入翻译
+  Hooks.register :posts, :pre_render do |post|
+    site = post.site
+    injector = PostTranslationInjector.new(site)
+    injector.inject_translations(post)
+  end
+  
+  Hooks.register :pages, :pre_render do |page|
+    site = page.site
+    injector = PostTranslationInjector.new(site)
+    injector.inject_translations(page)
+  end
 end

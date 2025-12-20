@@ -1,13 +1,15 @@
 ---
 layout: default
 ref: home
+extra_css:
+  - hero.css
 ---
 
 <section class="hero">
     <div class="container">
         <h1 class="hero-title">{{ page.translations.hero_title }}</h1>
         <p class="hero-subtitle">{{ page.translations.hero_subtitle }}</p>
-        <a href="{{ '/en/games/' | relative_url }}" class="btn btn-primary">{{ page.translations.hero_cta }}</a>
+        <a href="/{{ page.lang }}/games/" class="btn btn-primary">{{ page.translations.hero_cta }}</a>
     </div>
 </section>
 
@@ -24,14 +26,14 @@ ref: home
                     <div class="game-info">
                         <h3>{{ game.title[page.lang] }}</h3>
                         <p>{{ game.description[page.lang] }}</p>
-                        <a href="/{{ page.lang }}/games/{{ game.id }}/" class="btn">{{ page.translations.play_now }}</a>
+                        <a href="/{{ page.lang }}/games/{{ game.id }}/" class="btn btn-primary">{{ page.translations.play_now }}</a>
                     </div>
                 </div>
                 {% endif %}
             {% endfor %}
         </div>
         <div class="text-center">
-            <a href="{{ '/en/games/' | relative_url }}" class="btn btn-secondary">{{ page.translations.learn_more }}</a>
+            <a href="/{{ page.lang }}/games/" class="btn btn-secondary">{{ page.translations.learn_more }}</a>
         </div>
     </div>
 </section>

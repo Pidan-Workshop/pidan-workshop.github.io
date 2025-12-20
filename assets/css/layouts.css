@@ -1,0 +1,65 @@
+/* Layout and Grid Styles */
+
+/* Page Header */
+.page-header {
+    background: var(--bg-light);
+    padding: 3rem 0;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Grid Layouts */
+.games-grid,
+.products-grid,
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+/* Featured Sections */
+.featured-games,
+.recent-posts {
+    padding: 4rem 0;
+}
+
+.featured-games h2,
+.recent-posts h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Content */
+.content {
+    min-height: 60vh;
+    padding: 2rem 0;
+}
+
+/* No Content State */
+.no-content,
+.no-posts {
+    text-align: center;
+    padding: 3rem;
+    background: var(--bg-light);
+    border-radius: 12px;
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .games-grid,
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 0 1rem;
+    }
+}

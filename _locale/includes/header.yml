@@ -1,0 +1,20 @@
+# Header 组件翻译
+nav_home:
+  en: "Home"
+  zh: "首页"
+
+nav_games:
+  en: "Games"
+  zh: "游戏"
+
+nav_products:
+  en: "Products"
+  zh: "产品"
+
+nav_blog:
+  en: "Blog"
+  zh: "博客"
+
+nav_about:
+  en: "About"
+  zh: "关于"

@@ -2,17 +2,24 @@
 
 ## 概述
 
-`_locale/` 目录存储多语言翻译数据，采用与 `_templates/` 目录相同的组织结构，便于管理和扩展。每个页面有一个对应的 `index.yml` 文件，包含该页面所有的翻译字符串。
+`_locale/` 目录存储多语言翻译数据，采用**组件化设计**，每个组件或页面有对应的翻译文件，便于管理和维护。
 
-**特殊文件**：
-- `_locale/common.yml` - 存储全局通用翻译（导航、页脚、按钮等），会被插件自动注入到每个页面的 `page.common` 变量
+**目录结构**：
+- `_locale/common.yml` - 通用翻译（跨页面复用的文本）
+- `_locale/includes/*.yml` - 组件翻译（header、footer 等）
+- `_locale/*/index.yml` - 页面翻译（对应 `_templates/` 的页面）
+
+**所有翻译在构建时会被合并注入到 `page.translations`，在模板中使用 `{{ page.translations.key }}` 访问。**
 
 ## 文件结构
 
 ```
 _locale/
-├── common.yml                # 全局通用翻译（导航、页脚、按钮等）
-├── index.yml                 # 主页（home）翻译
+├── common.yml                # 🌐 通用翻译（按钮、消息、多页面标题等）
+├── includes/                 # 📦 组件翻译目录
+│   ├── header.yml            # 导航栏翻译
+│   └── footer.yml            # 页脚翻译
+├── index.yml                 # 主页翻译
 ├── about/
 │   └── index.yml             # 关于页面翻译
 ├── blog/
@@ -55,22 +62,31 @@ description:
 ## 页面文件说明
 
 ### _locale/common.yml
-全局通用翻译，包含：
-- 导航链接（`nav_home`, `nav_games`, `nav_products`, `nav_blog`, `nav_about`）
-- 页脚文本（`footer_quick_links`, `footer_follow_us`, `footer_all_rights`）
+**通用翻译**，用于跨多个页面复用的文本：
 - 常用按钮（`play_now`, `learn_more`, `view_details`, `read_more`）
 - 博客元素（`by`, `posted_on`）
-- 通用 UI（`loading`, `error`, `back`, `next`, `previous`）
-- 主页区段标题（`hero_title`, `hero_subtitle`, `games_title`, `blog_title`, `products_title`）
+- 导航控制（`back`, `next`, `previous`）
+- 系统消息（`loading`, `error`）
+- 多页面区段标题（`hero_title`, `games_title`, `blog_title`, `products_title`）
 
-这些翻译会被插件自动注入到每个页面的 `page.common` 变量。
+**访问方式**：`{{ page.common.key }}`
+
+### _locale/includes/header.yml
+**导航栏组件翻译**：
+- `nav_home`, `nav_games`, `nav_products`, `nav_blog`, `nav_about`
+
+**访问方式**：`{{ page.common.header.nav_home }}`
+
+### _locale/includes/footer.yml
+**页脚组件翻译**：
+- `quick_links` - "快速链接"标题
+- `follow_us` - "关注我们"标题
+- `all_rights` - 版权声明
+
+**访问方式**：`{{ page.common.footer.quick_links }}`
 
 ### _locale/index.yml
-主页特定翻译内容（对应 `_templates/index.html`），包括：
-- `title`: 页面标题
-- `hero_title`: 英雄区标题（如果需要覆盖 common.yml）
-- `hero_subtitle`: 英雄区副标题
-- `hero_cta`: 行动号召按钮文本
+主页特定翻译内容（对应 `_templates/index.html`）。
 
 ### _locale/about/index.yml
 关于页面翻译内容（对应 `_templates/about/index.html`）。
@@ -86,19 +102,46 @@ description:
 
 ## 添加新翻译键
 
-### 全局通用翻译（导航、按钮等）
+### 组件翻译（推荐用于 includes）
 
-1. 编辑 `_locale/common.yml`
-2. 添加新的键及其多语言翻译：
+如果你正在为 `_includes/` 中的组件添加翻译：
+
+1. 在 `_locale/includes/` 中创建对应的 `.yml` 文件（如 `_locale/includes/sidebar.yml`）
+2. 添加翻译键：
 ```yaml
-my_new_button:
-  en: "English text"
-  zh: "中文文本"
+title:
+  en: "Sidebar Title"
+  zh: "侧边栏标题"
+  
+link_text:
+  en: "View More"
+  zh: "查看更多"
 ```
 
-3. 在模板中使用：
+3. 在 include 文件中使用：
 ```liquid
-{{ page.common.my_new_button }}
+<!-- _includes/sidebar.html -->
+<h3>{{ page.translations.title }}</h3>
+<a href="#">{{ page.translations.link_text }}</a>
+```
+
+**优点**：翻译和组件一对一对应，易于维护
+
+### 通用翻译（用于跨页面复用）
+
+如果某个翻译会在多个地方使用（如通用按钮）：
+
+1. 编辑 `_locale/common.yml`
+2. 添加新的键：
+```yaml
+submit:
+  en: "Submit"
+  zh: "提交"
+```
+
+3. 在任何模板中使用：
+```liquid
+{{ page.translations.submit }}
 ```
 
 ### 页面特定翻译
@@ -113,8 +156,10 @@ my_new_key:
 
 3. 在 `_templates/` 中的对应 HTML/Markdown 模板里使用：
 ```liquid
-{{ page.locale.my_new_key }}
+{{ page.translations.my_new_key }}
 ```
+
+**注意**：所有翻译都会被合并到 `page.translations`，无论来自 common.yml、includes/*.yml 还是页面的 index.yml。
 
 ## 添加新页面
 

@@ -30,6 +30,8 @@ bundle install
 |------|------|
 | `_templates/` | 页面模板（HTML/MD），含 `ref` front matter |
 | `_locale/` | 多语言内容数据（YAML），按类别组织 |
+| `_locale/common.yml` | 通用翻译（按钮、消息等） |
+| `_locale/includes/*.yml` | 组件翻译（header、footer 等） |
 | `_plugins/locale_generator.rb` | Jekyll 插件，在构建时自动生成多语言页面 |
 | `_data/games.yml` | 游戏注册表 |
 | `_posts/en/` `_posts/zh/` | 博客文章（直接编辑，不通过模板系统） |
@@ -52,7 +54,7 @@ bundle install
 
 ## 关键规则
 
-- **模板中翻译**：页面级翻译使用 `{{ page.locale.key }}`；全局通用翻译使用 `{{ page.common.key }}`
+- **模板中翻译**：所有翻译统一使用 `{{ page.translations.key }}`（包括页面、组件、通用翻译）
 - **URL 构建**：始终包含语言段：`/{{ page.lang }}/games/`
 - **生成目录**：`_site/en/` 和 `_site/zh/` 由插件自动生成，勿手动编辑
 - **游戏元数据**：所有字段必需，含 `id`、`title`、`description`、`path`、`thumbnail`、`release_date`、`tags`、`featured`

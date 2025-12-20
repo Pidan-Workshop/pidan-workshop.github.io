@@ -5,28 +5,29 @@ ref: about
 
 <section class="page-header">
     <div class="container">
-        <h1>About Pidan Workshop</h1>
+        <h1>{{ page.translations.page_title }}</h1>
+        <p>{{ page.translations.page_subtitle }}</p>
     </div>
 </section>
 
 <section class="about-section">
     <div class="container">
         <div class="about-content">
-            <h2>Who We Are</h2>
-            <p>Pidan Workshop is a creative studio focused on developing innovative games and digital products. We believe in the power of creativity, technology, and community to create meaningful experiences.</p>
+            <h2>{{ page.translations.section_who_title }}</h2>
+            <p>{{ page.translations.section_who_content }}</p>
             
-            <h2>What We Do</h2>
+            <h2>{{ page.translations.section_what_title }}</h2>
             <ul>
-                <li><strong>Game Development:</strong> We create engaging HTML5 games using modern game engines like Defold</li>
-                <li><strong>Product Design:</strong> We build innovative tools and solutions for creative professionals</li>
-                <li><strong>Community Building:</strong> We share knowledge and collaborate with developers worldwide</li>
+                <li><strong>{{ page.translations.item_games_title }}:</strong> {{ page.translations.item_games_desc }}</li>
+                <li><strong>{{ page.translations.item_products_title }}:</strong> {{ page.translations.item_products_desc }}</li>
+                <li><strong>{{ page.translations.item_community_title }}:</strong> {{ page.translations.item_community_desc }}</li>
             </ul>
             
-            <h2>Our Mission</h2>
-            <p>To create games and products that inspire creativity, spark joy, and bring people together through innovative technology and thoughtful design.</p>
+            <h2>{{ page.translations.section_mission_title }}</h2>
+            <p>{{ page.translations.section_mission_content }}</p>
             
-            <h2>Get In Touch</h2>
-            <p>Want to collaborate or learn more about our work? Connect with us on <a href="https://github.com/Pidan-Workshop" target="_blank" rel="noopener">GitHub</a>.</p>
+            <h2>{{ page.translations.section_contact_title }}</h2>
+            <p>{{ page.translations.section_contact_content }} <a href="https://github.com/Pidan-Workshop" target="_blank" rel="noopener">{{ page.translations.section_contact_github }}</a>.</p>
         </div>
     </div>
 </section>

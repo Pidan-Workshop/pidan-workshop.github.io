@@ -9,3 +9,58 @@ page_title:
 page_subtitle:
   en: "Our Story"
   zh: "我们的故事"
+section_who_title:
+  en: "Who We Are"
+  zh: "我们是谁"
+
+section_who_content:
+  en: "Pidan Workshop is a creative studio focused on developing innovative games and digital products. We believe in the power of creativity, technology, and community to create meaningful experiences."
+  zh: "皮蛋工作室是一个专注于开发创新游戏和数字产品的创意工作室。我们相信创意、技术和社区的力量能够创造有意义的体验。"
+
+section_what_title:
+  en: "What We Do"
+  zh: "我们做什么"
+
+item_games_title:
+  en: "Game Development"
+  zh: "游戏开发"
+
+item_games_desc:
+  en: "We create engaging HTML5 games using modern game engines like Defold"
+  zh: "我们使用 Defold 等现代游戏引擎创建引人入胜的 HTML5 游戏"
+
+item_products_title:
+  en: "Product Design"
+  zh: "产品设计"
+
+item_products_desc:
+  en: "We build innovative tools and solutions for creative professionals"
+  zh: "我们为创意专业人士构建创新工具和解决方案"
+
+item_community_title:
+  en: "Community Building"
+  zh: "社区建设"
+
+item_community_desc:
+  en: "We share knowledge and collaborate with developers worldwide"
+  zh: "我们与全球开发者分享知识并进行合作"
+
+section_mission_title:
+  en: "Our Mission"
+  zh: "我们的使命"
+
+section_mission_content:
+  en: "To create games and products that inspire creativity, spark joy, and bring people together through innovative technology and thoughtful design."
+  zh: "创造激发创意、带来喜悦、通过创新技术和深思熟虑的设计将人们聚集在一起的游戏和产品。"
+
+section_contact_title:
+  en: "Get In Touch"
+  zh: "联系我们"
+
+section_contact_content:
+  en: "Want to collaborate or learn more about our work? Connect with us on"
+  zh: "想要合作或了解更多关于我们的工作？在"
+
+section_contact_github:
+  en: "GitHub"
+  zh: "GitHub"

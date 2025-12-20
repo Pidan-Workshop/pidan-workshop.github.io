@@ -5,8 +5,8 @@ ref: blog
 
 <section class="page-header">
     <div class="container">
-        <h1>{{ page.common.blog_title }}</h1>
-        <p>{{ page.common.blog_subtitle }}</p>
+        <h1>{{ page.translations.blog_title }}</h1>
+        <p>{{ page.translations.blog_subtitle }}</p>
     </div>
 </section>
 
@@ -24,13 +24,13 @@ ref: blog
                         {{ post.date | date: "%B %d, %Y" }}
                     </time>
                     {% if post.author %}
-                    <span>{{ page.common.by }} {{ post.author }}</span>
+                    <span>{{ page.translations.by }} {{ post.author }}</span>
                     {% endif %}
                 </div>
                 <div class="post-excerpt">
                     {{ post.excerpt }}
                 </div>
-                <a href="{{ post.url | relative_url }}" class="read-more">{{ page.common.read_more }} →</a>
+                <a href="{{ post.url | relative_url }}" class="read-more">{{ page.translations.read_more }} →</a>
                 {% if post.tags %}
                 <div class="post-tags">
                     {% for tag in post.tags %}
@@ -43,7 +43,7 @@ ref: blog
         </div>
         {% else %}
         <div class="no-posts">
-            <p>No posts yet. Check back soon!</p>
+            <p>{{ page.translations.no_posts }}</p>
         </div>
         {% endif %}
     </div>

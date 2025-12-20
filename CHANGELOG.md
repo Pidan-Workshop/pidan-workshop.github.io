@@ -3,15 +3,26 @@
 ## [Unreleased]
 
 ### Changed
-- **Locale Structure**: Migrated `_data/translations.yml` to `_locale/common.yml` for consistent data structure
-  - All global translations (nav, footer, buttons) now in `_locale/common.yml`
-  - Unified access pattern: `{{ page.common.key }}` instead of `{{ site.data.translations[page.lang].key }}`
-  - Plugin automatically loads common translations and injects into each page
-- **Template Simplification**: Removed `{% assign t = site.data.translations[page.lang] %}` from all templates
-- **Documentation**: Updated all docs to reflect new translation access patterns
+- **Locale Structure Refactor**: Unified translation injection via `page.translations`
+  - Migrated `_data/translations.yml` to component-based structure
+  - Created `_locale/includes/` directory for component-specific translations
+    - `header.yml` - Navigation bar translations
+    - `footer.yml` - Footer translations
+  - All translations (page-specific, component, common) merged into `page.translations`
+  - Simplified template syntax: `{{ page.translations.key }}` for all translations
+  - Plugin automatically merges and injects all translation sources
+- **Template Updates**: 
+  - Removed `{% assign t = site.data.translations[page.lang] %}` from all templates
+  - Unified all translation access to `{{ page.translations.key }}`
+- **Documentation**: Updated all docs to reflect new unified translation pattern
+
+### Added
+- `_locale/common.yml` - Common translations (buttons, messages, multi-page titles)
+- `_locale/includes/header.yml` - Navigation component translations
+- `_locale/includes/footer.yml` - Footer component translations
 
 ### Removed
-- `_data/translations.yml` - replaced by `_locale/common.yml`
+- `_data/translations.yml` - replaced by component-based structure
 
 ## [2.0.0] - 2025-12-19
 

@@ -1,38 +1,29 @@
-# 全局通用翻译（导航、页脚、常用UI文本）
-# Navigation
-nav_home:
-  en: "Home"
-  zh: "首页"
+# 通用 UI 文本（用于页面内容，非组件）
+# 如果某个翻译被多个地方使用，可以放在这里
 
-nav_games:
-  en: "Games"
-  zh: "游戏"
+# Common Actions
+play_now:
+  en: "Play Now"
+  zh: "立即游玩"
 
-nav_products:
-  en: "Products"
-  zh: "产品"
+learn_more:
+  en: "Learn More"
+  zh: "了解更多"
 
-nav_blog:
-  en: "Blog"
-  zh: "博客"
+view_details:
+  en: "View Details"
+  zh: "查看详情"
 
-nav_about:
-  en: "About"
-  zh: "关于"
+read_more:
+  en: "Read More"
+  zh: "阅读更多"
 
-# Homepage sections
-hero_title:
-  en: "Welcome to Pidan Workshop"
-  zh: "欢迎来到皮蛋工作室"
+# Blog Meta
+by:
+  en: "by"
+  zh: "作者"
 
-hero_subtitle:
-  en: "Creative games and innovative products"
-  zh: "创意游戏与创新产品"
-
-hero_cta:
-  en: "Explore Our Work"
-  zh: "探索我们的作品"
-
+# Page Section Titles (用于多个页面)
 games_title:
   en: "Our Games"
   zh: "我们的游戏"
@@ -56,63 +47,4 @@ products_title:
 products_subtitle:
   en: "Innovative solutions and creative tools"
   zh: "创新解决方案与创意工具"
-
-# Footer
-footer_quick_links:
-  en: "Quick Links"
-  zh: "快速链接"
-
-footer_follow_us:
-  en: "Follow Us"
-  zh: "关注我们"
-
-footer_all_rights:
-  en: "All rights reserved"
-  zh: "版权所有"
-
-# Blog
-by:
-  en: "by"
-  zh: "作者"
-
-posted_on:
-  en: "Posted on"
-  zh: "发布于"
-
-read_more:
-  en: "Read More"
-  zh: "阅读更多"
-
-# Common UI
-loading:
-  en: "Loading..."
-  zh: "加载中..."
-
-error:
-  en: "Error"
-  zh: "错误"
-
-back:
-  en: "Back"
-  zh: "返回"
-
-next:
-  en: "Next"
-  zh: "下一篇"
-
-previous:
-  en: "Previous"
-  zh: "上一篇"
-
-play_now:
-  en: "Play Now"
-  zh: "立即游玩"
-
-learn_more:
-  en: "Learn More"
-  zh: "了解更多"
-
-view_details:
-  en: "View Details"
-  zh: "查看详情"
 

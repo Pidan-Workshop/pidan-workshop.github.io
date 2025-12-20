@@ -135,22 +135,27 @@ description:
 
 ### 访问翻译数据
 
-在模板中有两种方式访问翻译：
+所有翻译统一通过 `page.translations` 访问，无论来源：
 
-#### 方式 1：页面级翻译（推荐用于页面特定内容）
 ```liquid
-{{ page.locale.hero_title }}
-{{ page.locale.description }}
+<!-- 页面特定翻译 -->
+{{ page.translations.hero_title }}
+
+<!-- 组件翻译（来自 _locale/includes/） -->
+{{ page.translations.nav_home }}
+{{ page.translations.quick_links }}
+
+<!-- 通用翻译（来自 _locale/common.yml） -->
+{{ page.translations.play_now }}
+{{ page.translations.by }}
 ```
 
-#### 方式 2：全局通用翻译（用于导航、页脚、按钮等）
-```liquid
-{{ page.common.nav_home }}
-{{ page.common.footer_copyright }}
-{{ page.common.play_now }}
-```
-
-**注意**：插件会自动从 `_locale/common.yml` 加载全局翻译并注入到每个页面的 `page.common` 变量。
+**插件工作流程**：
+1. 加载页面特定翻译（`_locale/*/index.yml`）
+2. 加载通用翻译（`_locale/common.yml`）
+3. 加载组件翻译（`_locale/includes/*.yml`）
+4. 将所有翻译合并到 `page.translations`
+5. 自动注入到每个生成的页面
 
 ## 配置说明
 

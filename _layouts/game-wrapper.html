@@ -12,16 +12,15 @@
     {% include header.html %}
     
     <main class="content">
-        {% assign game_detail_t = page.page_locale %}
         {% assign game = site.data.games | where: "id", page.game_id | first %}
         
         <section class="game-detail-header">
             <div class="container">
                 <a href="/{{ page.lang }}/games/" class="breadcrumb">
-                    ← {{ game_detail_t.back_to_games[page.lang] }}
+                    ← {{ page.translations.back_to_games }}
                 </a>
                 <h1>{{ game.title[page.lang] }}</h1>
-                <p class="game-release">{{ game_detail_t.released[page.lang] }}: {{ game.release_date | date: "%B %d, %Y" }}</p>
+                <p class="game-release">{{ page.translations.released }}: {{ game.release_date | date: "%B %d, %Y" }}</p>
             </div>
         </section>
 
@@ -37,21 +36,21 @@
                                 allowfullscreen
                                 allow="fullscreen"></iframe>
                         </div>
-                        <button class="fullscreen-btn" data-target="game-iframe-container" aria-label="{{ game_detail_t.fullscreen[page.lang] }}">
-                            <span>{{ game_detail_t.fullscreen[page.lang] }}</span>
+                        <button class="fullscreen-btn" data-target="game-iframe-container" aria-label="{{ page.translations.fullscreen }}">
+                            <span>{{ page.translations.fullscreen }}</span>
                         </button>
                     </div>
                     
                     <!-- 右侧：游戏信息面板 -->
                     <div class="game-info-panel">
                         <div class="game-about">
-                            <h2>{{ game_detail_t.about[page.lang] }}</h2>
+                            <h2>{{ page.translations.about }}</h2>
                             <p>{{ game.description[page.lang] }}</p>
                         </div>
                         
                         <div class="game-meta">
                             <div class="meta-item">
-                                <strong>{{ game_detail_t.tags[page.lang] }}:</strong>
+                                <strong>{{ page.translations.tags }}:</strong>
                                 <div class="tags">
                                     {% for tag in game.tags %}
                                     <span class="tag">{{ tag }}</span>
@@ -61,7 +60,7 @@
                         </div>
                         
                         <a href="{{ game.path }}" class="btn btn-primary" target="_blank">
-                            {{ game_detail_t.play_now[page.lang] }}
+                            {{ page.translations.play_now }}
                         </a>
                     </div>
                 </div>

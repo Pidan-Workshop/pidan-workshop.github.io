@@ -25,7 +25,10 @@ Visit us at: [https://pidanworshop.github.io](https://pidanworshop.github.io)
 ├── _includes/           # Reusable components (header, footer, etc.)
 ├── _layouts/            # Page layouts
 ├── _locale/             # Multi-language translation data (YAML)
-│   ├── common.yml       # 🌍 Global translations (nav, footer, buttons)
+│   ├── common.yml       # 🌍 Common translations (buttons, messages, multi-page titles)
+│   ├── includes/        # 📦 Component translations (header, footer, etc.)
+│   │   ├── header.yml   # Navigation translations
+│   │   └── footer.yml   # Footer translations
 │   ├── index.yml
 │   ├── about/
 │   ├── games/
@@ -225,7 +228,8 @@ This site uses a **Jekyll plugin-based multi-language system**:
 ### Architecture Overview
 - **Single source templates** in `_templates/` directory
 - **Translation data** in `_locale/` directory (organized by page)
-- **Global translations** in `_locale/common.yml` (nav, footer, buttons)
+- **Component translations** in `_locale/includes/` (header, footer, etc.)
+- **Common translations** in `_locale/common.yml` (buttons, messages, multi-page titles)
 - **Plugin auto-generation** during Jekyll build to `_site/en/` and `_site/zh/`
 
 For detailed information, see [docs/PLUGIN_ARCHITECTURE.md](docs/PLUGIN_ARCHITECTURE.md)

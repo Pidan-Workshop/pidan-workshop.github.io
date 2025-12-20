@@ -5,8 +5,8 @@ ref: games
 
 <section class="page-header">
     <div class="container">
-        <h1>{{ page.common.games_title }}</h1>
-        <p>{{ page.common.games_subtitle }}</p>
+        <h1>{{ page.translations.games_title }}</h1>
+        <p>{{ page.translations.games_subtitle }}</p>
     </div>
 </section>
 
@@ -29,7 +29,7 @@ ref: games
                             {% endfor %}
                         </div>
                     </div>
-                    <a href="/{{ page.lang }}/games/{{ game.id }}/" class="btn btn-primary">{{ page.common.play_now }}</a>
+                    <a href="/{{ page.lang }}/games/{{ game.id }}/" class="btn btn-primary">{{ page.translations.play_now }}</a>
                 </div>
             </div>
             {% endfor %}

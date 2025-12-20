@@ -1,6 +1,6 @@
 # Pidan Workshop
 
-Welcome to the official GitHub repository for Pidan Workshop's webse! This is a multi-functional GitHub Pages site featuring product showcases, HTML5 games, and a bilingual blog.
+Welcome to the official GitHub repository for Pidan Workshop's website! This is a multi-functional GitHub Pages site featuring product showcases, HTML5 games, and a bilingual blog.
 
 ## 🌐 Live Site
 
@@ -14,6 +14,7 @@ Visit us at: [https://pidanworshop.github.io](https://pidanworshop.github.io)
 - **Blog System**: Share updates, tutorials, and insights
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Jekyll-Powered**: Static site generation with Jekyll for GitHub Pages
+- **Plugin-Based i18n**: Automatic multi-language page generation via Jekyll plugin
 
 ## 🏗️ Project Structure
 
@@ -23,34 +24,32 @@ Visit us at: [https://pidanworshop.github.io](https://pidanworshop.github.io)
 ├── _data/               # Data files (translations, games metadata)
 ├── _includes/           # Reusable components (header, footer, etc.)
 ├── _layouts/            # Page layouts
-├── _locale/             # Page title translations
-│   └── page_titles.yml
+├── _locale/             # Multi-language translation data (YAML)
+│   ├── index.yml
+│   ├── about/
+│   ├── games/
+│   └── products/
 ├── _templates/          # Multi-language page templates (source)
 │   ├── index.html
 │   ├── about/
 │   ├── games/
 │   ├── blog/
 │   └── products/
+├── _plugins/            # Jekyll plugins
+│   └── locale_generator.rb  # 🔧 Auto-generates multi-language pages during build
 ├── _posts/              # Blog posts
 │   ├── en/             # English posts
 │   └── zh/             # Chinese posts
-├── scripts/             # Build scripts
-│   └── generate_pages.rb  # Generate language pages from templates
 ├── assets/              # Static assets (CSS, JS, images)
-├── en/                  # English pages (auto-generated)
-│   ├── index.html
-│   ├── games/
-│   ├── products/
-│   ├── blog/
-│   └── about/
-├── zh/                  # Chinese pages (auto-generated)
-│   └── [same structure as en/]
 ├── games/               # Individual game directories
 │   └── sample-game/    # Each game has its own folder
+├── _site/               # Built site (auto-generated)
+│   ├── en/             # English pages
+│   └── zh/             # Chinese pages
 └── index.html          # Language selection landing page
 ```
 
-**Note**: Files in `en/` and `zh/` are auto-generated from `_templates/` and excluded from version control.
+**Note**: The `_site/en/` and `_site/zh/` directories are **automatically generated** by the Jekyll plugin during build - they are not committed to version control.
 
 ## 🎮 Adding a New Game
 
@@ -98,7 +97,7 @@ Your content here...
 ## 🛠️ Local Development
 
 ### Prerequisites
-- Ruby 3.1+ and Bundler installed
+- Ruby 3.1+ with Bundler installed (Ruby 3.4+ requires additional standard library gems)
 - Git
 
 ### Setup and Run
@@ -114,7 +113,7 @@ Your content here...
    bundle install
    ```
 
-3. **Start the development server** (automatically generates pages and watches for changes):
+3. **Start the development server**:
    
    **On Windows (PowerShell):**
    ```powershell
@@ -125,6 +124,8 @@ Your content here...
    ```bash
    make dev
    ```
+   
+   The Jekyll plugin automatically generates multi-language pages during the build process.
 
 4. Visit `http://localhost:4000`
 
@@ -132,14 +133,8 @@ Your content here...
 
 #### For Windows (PowerShell):
 ```powershell
-# Development with auto-regeneration
+# Development server (auto-generates pages)
 .\build.ps1 dev
-
-# Generate pages from templates
-.\build.ps1 generate
-
-# Start server only (no template watching)
-.\build.ps1 serve
 
 # Build for production
 .\build.ps1 build
@@ -153,14 +148,8 @@ Your content here...
 
 #### For macOS/Linux:
 ```bash
-# Development with auto-regeneration
+# Development server (auto-generates pages)
 make dev
-
-# Generate pages from templates
-make generate
-
-# Start server only
-make serve
 
 # Build for production
 make build
@@ -172,111 +161,97 @@ make clean
 make help
 ```
 
-### Important: Template-Based Architecture
+### Important: Plugin-Based Multi-Language Architecture
 
-This site uses a **template + locale** multi-language architecture:
+This site uses a **Jekyll plugin-based system** for automatic multi-language page generation:
 
-- **Edit templates** in `_templates/` directory (NOT `en/` or `zh/` directly)
-- **Define multi-language content** in `_locale/` directory (YAML files)
-- **Run build commands** to generate language-specific files
-- **Files in `en/` and `zh/`** are auto-generated and git-ignored
+- **Source templates** in `_templates/` directory (one per page)
+- **Translation data** in `_locale/` directory (organized by page)  
+- **Automatic generation** during Jekyll build to `_site/en/` and `_site/zh/`
+- **No temporary files** - pages generated directly to `_site`
+- **No manual scripts** - just run Jekyll, plugin does the rest
 
-### Making Changes to Pages
+📖 For complete architecture details, see [docs/PLUGIN_ARCHITECTURE.md](docs/PLUGIN_ARCHITECTURE.md)
 
-1. Edit the template in `_templates/`:
-   ```bash
-   # Example: edit about page
+### Editing Existing Pages
+
+1. **Edit the template** in `_templates/`:
+   ```html
    _templates/about/index.html
    ```
 
-2. Add or edit language content in `_locale/`:
-   ```bash
-   # Example: edit about page translations
+2. **Update translations** in `_locale/`:
+   ```yaml
    _locale/about/index.yml
    ```
 
-3. Run the appropriate command:
-   ```powershell
-   # Windows
-   .\build.ps1 dev
-   ```
-   ```bash
-   # macOS/Linux
-   make dev
-   ```
+3. **Save and refresh** - Jekyll automatically rebuilds with LiveReload
 
-4. The generated pages will be automatically created and available at:
+4. **View changes** at:
    - English: `http://localhost:4000/en/about/`
    - Chinese: `http://localhost:4000/zh/about/`
 
-### Adding New Static Pages
+### Creating New Pages
 
-When creating a new static page:
-
-1. Create a template in `_templates/new-page/index.html`:
-   ```yaml
+1. **Create a template** in `_templates/contact/index.html`:
+   ```html
    ---
    layout: default
-   ref: new-page
+   ref: contact
    ---
+   
+   <h1>{{ site.data.translations[page.lang].contact_title }}</h1>
+   <!-- Template HTML here -->
    ```
 
-2. Create language content in `_locale/new-page/index.yml`:
+2. **Add translations** in `_locale/contact/index.yml`:
    ```yaml
    title:
-     en: "New Page Title"
-     zh: "新页面标题"
-   content:
-     en: "Your English content here"
-     zh: "你的中文内容"
+     en: "Contact Us"
+     zh: "联系我们"
    ```
 
-3. Run the generate command:
-   ```powershell
-   # Windows
-   .\build.ps1 generate
-   ```
-   ```bash
-   # macOS/Linux
-   make generate
-   ```
+3. **Save file** - plugin automatically generates pages
 
-4. The page will be generated at:
-   - `/en/new-page/`
-   - `/zh/new-page/`
+4. **Access at**:
+   - English: `http://localhost:4000/en/contact/`
+   - Chinese: `http://localhost:4000/zh/contact/`
 
 ## 🌍 Internationalization
 
-This site uses a **template-based multi-language system**:
+This site uses a **Jekyll plugin-based multi-language system**:
 
 ### Architecture Overview
 - **Single source templates** in `_templates/` directory
-- **Language-specific files** auto-generated to `en/` and `zh/`
-- **Translation data** in `_data/translations.yml` for UI strings
-- **Page titles** in `_locale/page_titles.yml`
-- **Build script** (`scripts/generate_pages.rb`) generates all language versions
+- **Translation data** in `_locale/` directory (organized by page)
+- **Plugin auto-generation** during Jekyll build to `_site/en/` and `_site/zh/`
+- **Global UI strings** in `_data/translations.yml`
 
+For detailed information, see [docs/PLUGIN_ARCHITECTURE.md](docs/PLUGIN_ARCHITECTURE.md)
 
 ### Automated Deployment
 
 The GitHub Actions workflow (`.github/workflows/pages.yml`) automatically:
-1. Generates language-specific pages from templates
-2. Builds the Jekyll site
+1. Installs Ruby and dependencies
+2. Runs Jekyll build (plugin generates pages automatically)
 3. Deploys to GitHub Pages
 
 **No manual generation needed** - just commit and push your changes to the `main` branch
-### How It Works
-1. Templates in `_templates/` contain only `layout` and `ref` in front matter (no `lang` or `title`)
-2. Generation script reads templates and creates language-specific files
-3. Each generated file gets appropriate `lang` and `title` from `_locale/page_titles.yml`
-4. Language switcher component links translations using `ref` values
+
+### Architecture Overview
+1. **Source files** in `_templates/` and `_locale/`
+2. **Plugin activation** - `_plugins/locale_generator.rb` runs at build time
+3. **Page generation** - creates `LocalePage` objects for each language
+4. **Rendering** - Jekyll renders directly to `_site/en/` and `_site/zh/`
+5. **Language linking** - `ref` field connects translations automatically
 
 ### Benefits
 - ✅ Single source of truth for page content
-- ✅ No duplicate HTML files to maintain
+- ✅ No temporary files or directories
+- ✅ Automatic page generation during build
 - ✅ Easy to add new languages
-- ✅ Automatic consistency across translations
-- ✅ Works with GitHub Pages (no custom plugins needed)
+- ✅ Seamless development experience
+- ✅ Works with GitHub Pages custom workflows
 
 ## 🚀 Deployment
 

@@ -8,9 +8,5 @@ vendor/
 .DS_Store
 *.log
 
-# 生成的语言文件（从 _templates/ 生成）
-/en/
-/zh/
-
-# 但保留 _posts/ 下的语言目录
-!/_posts/
+# 注意：现在使用 _plugins 方案，页面直接生成到 _site
+# 不再需要排除 /en/ 和 /zh/ 目录

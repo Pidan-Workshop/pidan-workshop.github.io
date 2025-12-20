@@ -7,6 +7,7 @@ url: "https://pidanworshop.github.io"
 # Build settings
 markdown: kramdown
 permalink: /blog/:categories/:year/:month/:day/:title/
+safe: false  # 允许加载自定义插件
 
 # Plugins
 plugins:
@@ -21,6 +22,11 @@ exclude:
   - README.md
   - node_modules/
   - vendor/
+  - _templates/  # 模板目录不直接输出
+  - _locale/     # locale 数据目录不直接输出
+  - scripts/     # 构建脚本不输出
+  - build.ps1
+  - Makefile
 
 # Collections
 collections:
@@ -43,14 +49,7 @@ defaults:
       lang: "zh"
       layout: "post"
       permalink: /zh/blog/:year/:month/:day/:title/
-  - scope:
-      path: "en"
-    values:
-      lang: "en"
-  - scope:
-      path: "zh"
-    values:
-      lang: "zh"
+  # 注意：不再需要 en/ 和 zh/ 的 scope，因为插件会自动设置
 
 # Sass
 sass:

@@ -25,3 +25,6 @@ play_now:
 fullscreen:
   en: "Fullscreen"
   zh: "全屏"
+more_info_toggle:
+  en: "More Information"
+  zh: "更多信息"

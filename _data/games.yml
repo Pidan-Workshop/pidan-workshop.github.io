@@ -10,6 +10,13 @@
   release_date: 2025-12-18
   tags: ["platformer", "2d"]
   featured: true
+  more_info:
+    developer: "Pidan Workshop"
+    engine: "Defold"
+    playtime: "~30 minutes"
+    platforms:
+      - "Windows"
+      - "Web"
   
 - id: bomb-frog
   title:
@@ -30,4 +37,11 @@
   release_date: 2025-12-18
   tags: ["pixel-art", "2d"]
   featured: true
-  
+  more_info:
+    developer: "Pidan Workshop"
+    engine: "Defold"
+    playtime: "~20 minutes per playthrough"
+    platforms:
+      - "Windows"
+      - "Linux"
+      - "Web"

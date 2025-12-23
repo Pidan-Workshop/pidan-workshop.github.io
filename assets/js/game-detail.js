@@ -25,4 +25,35 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-});
+
+    // Handle More Information details element smooth animation
+    const moreInfoDetails = document.querySelectorAll('.more-info-details');
+    
+    moreInfoDetails.forEach(details => {
+        const summary = details.querySelector('.more-info-summary');
+        const content = details.querySelector('.more-info-content');
+        
+        if (!summary || !content) return;
+        
+        // Smooth open/close animation
+        details.addEventListener('toggle', function(e) {
+            if (this.open) {
+                // Opening
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.opacity = '1';
+            } else {
+                // Closing
+                content.style.maxHeight = '0px';
+                content.style.opacity = '0';
+            }
+        });
+        
+        // Initialize styles
+        if (!details.open) {
+            content.style.maxHeight = '0px';
+            content.style.opacity = '0';
+        } else {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            content.style.opacity = '1';
+        }
+    });

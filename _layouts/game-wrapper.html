@@ -35,42 +35,80 @@
 
         <section class="game-detail-content">
             <div class="container">
-                <div class="game-detail-grid">
-                    <!-- 左侧：游戏画面容器 -->
-                    <div class="game-display">
-                        <div class="game-iframe-container">
-                            <iframe 
-                                src="{{ game.path }}" 
-                                title="{{ game.title[page.lang] }}"
-                                allowfullscreen
-                                allow="fullscreen"></iframe>
-                        </div>
-                        <button class="fullscreen-btn" data-target="game-iframe-container" aria-label="{{ page.translations.fullscreen }}">
-                            <span>{{ page.translations.fullscreen }}</span>
-                        </button>
+                <!-- 游戏画面容器 -->
+                <div class="game-display">
+                    <div class="game-iframe-container">
+                        <iframe 
+                            src="{{ game.path }}" 
+                            title="{{ game.title[page.lang] }}"
+                            allowfullscreen
+                            allow="fullscreen"></iframe>
                     </div>
-                    
-                    <!-- 右侧：游戏信息面板 -->
-                    <div class="game-info-panel">
-                        <div class="game-about">
-                            <h2>{{ page.translations.about }}</h2>
-                            <p>{{ game.description[page.lang] }}</p>
-                        </div>
-                        
-                        <div class="game-meta">
-                            <div class="meta-item">
-                                <strong>{{ page.translations.tags }}:</strong>
-                                <div class="tags">
-                                    {% for tag in game.tags %}
-                                    <span class="tag">{{ tag }}</span>
-                                    {% endfor %}
+                </div>
+                
+                <!-- 游戏信息面板 -->
+                <div class="game-info-grid">
+                    <!-- 游戏简介卡片 -->
+                    <div class="game-info-card game-about-card">
+                        <h2>{{ page.translations.about }}</h2>
+                        <p>{{ game.description[page.lang] }}</p>
+                    </div>
+
+                    <!-- 更多信息折叠区域 -->
+                    <div class="game-info-card game-more-info-card">
+                        <details class="more-info-details">
+                            <summary class="more-info-summary">
+                                <span class="summary-text">{{ page.translations.more_info_toggle }}</span>
+                                <span class="toggle-icon">▶</span>
+                            </summary>
+                            <div class="more-info-content">
+                                <!-- 标签 -->
+                                {% if game.tags %}
+                                <div class="info-item">
+                                    <strong>{{ page.translations.tags }}</strong>
+                                    <div class="tags">
+                                        {% for tag in game.tags %}
+                                        <span class="tag">{{ tag }}</span>
+                                        {% endfor %}
+                                    </div>
                                 </div>
+                                {% endif %}
+                                
+                                {% if game.more_info %}
+                                {% if game.more_info.developer %}
+                                <div class="info-item">
+                                    <strong>Developer:</strong>
+                                    <p>{{ game.more_info.developer }}</p>
+                                </div>
+                                {% endif %}
+                                
+                                {% if game.more_info.engine %}
+                                <div class="info-item">
+                                    <strong>Engine:</strong>
+                                    <p>{{ game.more_info.engine }}</p>
+                                </div>
+                                {% endif %}
+                                
+                                {% if game.more_info.playtime %}
+                                <div class="info-item">
+                                    <strong>Average Playtime:</strong>
+                                    <p>{{ game.more_info.playtime }}</p>
+                                </div>
+                                {% endif %}
+                                
+                                {% if game.more_info.platforms %}
+                                <div class="info-item">
+                                    <strong>Platforms:</strong>
+                                    <div class="platform-list">
+                                        {% for platform in game.more_info.platforms %}
+                                        <span class="platform-badge">{{ platform }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endif %}
                             </div>
-                        </div>
-                        
-                        <a href="{{ game.path }}" class="btn btn-primary" target="_blank">
-                            {{ page.translations.play_now }}
-                        </a>
+                        </details>
                     </div>
                 </div>
             </div>

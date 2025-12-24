@@ -2,29 +2,50 @@
  * Game Detail Page Script
  */
 
-document.addEventListener('DOMContentLoaded', function() {
-    const fullscreenBtns = document.querySelectorAll('.fullscreen-btn');
+// 全屏切换函数
+function toggleGameFullscreen() {
+    const gameDisplay = document.querySelector('.game-display');
+    if (!gameDisplay) {
+        console.error('Game display container not found');
+        return;
+    }
     
-    fullscreenBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const targetSelector = this.getAttribute('data-target');
-            const targetElement = document.querySelector('.' + targetSelector);
-            
-            if (!targetElement) return;
-            
-            if (targetElement.requestFullscreen) {
-                targetElement.requestFullscreen().catch(err => {
-                    console.error('Unable to enter fullscreen:', err.message);
-                });
-            } else if (targetElement.webkitRequestFullscreen) {
-                // Safari
-                targetElement.webkitRequestFullscreen();
-            } else if (targetElement.msRequestFullscreen) {
-                // IE11
-                targetElement.msRequestFullscreen();
-            }
-        });
-    });
+    // 检查是否已经在全屏状态
+    const isCurrentlyFullscreen = document.fullscreenElement === gameDisplay ||
+                                  document.webkitFullscreenElement === gameDisplay ||
+                                  document.mozFullScreenElement === gameDisplay ||
+                                  document.msFullscreenElement === gameDisplay;
+    
+    if (!isCurrentlyFullscreen) {
+        // 请求全屏
+        if (gameDisplay.requestFullscreen) {
+            gameDisplay.requestFullscreen().catch(err => {
+                console.error('Fullscreen request failed:', err);
+            });
+        } else if (gameDisplay.webkitRequestFullscreen) {
+            gameDisplay.webkitRequestFullscreen();
+        } else if (gameDisplay.mozRequestFullScreen) {
+            gameDisplay.mozRequestFullScreen();
+        } else if (gameDisplay.msRequestFullscreen) {
+            gameDisplay.msRequestFullscreen();
+        } else {
+            console.warn('Fullscreen API not supported');
+        }
+    } else {
+        // 退出全屏
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
 
     // Handle More Information details element smooth animation
     const moreInfoDetails = document.querySelectorAll('.more-info-details');
@@ -57,3 +78,4 @@ document.addEventListener('DOMContentLoaded', function() {
             content.style.opacity = '1';
         }
     });
+});

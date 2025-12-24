@@ -9,7 +9,7 @@
   path: "/games/sample-game/"
   release_date: 2025-12-18
   tags: ["platformer", "2d"]
-  featured: true
+  featured: false
   more_info:
     developer: "Pidan Workshop"
     engine: "Defold"
@@ -80,7 +80,7 @@
   path: "https://itch.io/embed-upload/13765570?color=333333"
   release_date: 2025-12-18
   tags: ["card", "puzzle"]
-  featured: false
+  featured: true
   more_info:
     developer: "Pidan Workshop"
     engine: "Godot"

@@ -27,7 +27,7 @@
       Collect bombs and use them to uncover hidden treasure and vanquish ghosts. Collect enough treasure to progress to the next level - a target number is displayed in the lower left of the game.
       Look for secrets! Beware the fearsome black ghosts!
       Controls are included in the game. There are 8 levels of increasing difficulty.
-      "A fun action game where you control a frog with bomb mechanics
+      A fun action game where you control a frog with bomb mechanics.
     zh: |
       收集炸弹，用它们来发现隐藏的宝藏并消灭幽灵。收集足够的宝藏即可进入下一关——目标数字会显示在游戏左下角。
       寻找秘密！小心可怕的黑色幽灵！
@@ -44,4 +44,46 @@
     platforms:
       - "Windows"
       - "Linux"
+      - "Web"
+
+- id: the-trader
+  title:
+    en: "The Trader"
+    zh: "拼好摊"
+  description:
+    en: |
+      A fun trading and business simulation game. Manage your stall and become a successful trader!
+    zh: |
+      一个有趣的贸易和商业模拟游戏。经营你的小摊，成为成功的商人！
+  thumbnail: "/assets/images/games/the-trader-thumb.png"
+  path: "https://itch.io/embed-upload/13289922?color=333333"
+  release_date: 2025-12-18
+  tags: ["simulation", "business"]
+  featured: true
+  more_info:
+    developer: "Pidan Workshop"
+    engine: "Godot"
+    playtime: "Varies"
+    platforms:
+      - "Web"
+
+- id: echo
+  title:
+    en: "Echo"
+    zh: "致命回响"
+  description:
+    en: |
+      A suspenseful narrative-driven game. Uncover the mysteries and secrets hidden in the echoes.
+    zh: |
+      一款充满悬念的叙事驱动游戏。在回响中发现隐藏的谜团和秘密。
+  thumbnail: "/assets/images/games/echo-thumb.png"
+  path: "https://itch.io/embed-upload/13765570?color=333333"
+  release_date: 2025-12-18
+  tags: ["card", "puzzle"]
+  featured: false
+  more_info:
+    developer: "Pidan Workshop"
+    engine: "Godot"
+    playtime: "Varies"
+    platforms:
       - "Web"

@@ -42,13 +42,9 @@
             </div>
             
             <footer class="essay-footer">
-                <nav class="essay-nav">
-                    <a href="{{ '/' | append: page.lang | append: '/products/' | relative_url }}" class="btn btn-secondary">
-                        {% if page.lang == 'zh' %}
-                            ← 返回产品
-                        {% else %}
-                            ← Back to Products
-                        {% endif %}
+                <nav class="essay-nav floating-nav">
+                    <a href="{{ '/' | append: page.lang | append: '/products/eight-legged-essay/' | relative_url }}" class="btn btn-secondary floating-btn">
+                        ← {{ page.translations.back }}
                     </a>
                 </nav>
             </footer>

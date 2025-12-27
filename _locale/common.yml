@@ -18,6 +18,10 @@ read_more:
   en: "Read More"
   zh: "阅读更多"
 
+back:
+  en: "Back"
+  zh: "返回"
+
 # Blog Meta
 by:
   en: "by"

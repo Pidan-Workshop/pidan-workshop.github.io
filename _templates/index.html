@@ -51,7 +51,7 @@ extra_css:
                     <div class="product-info">
                         <h3>{{ product.title[page.lang] }}</h3>
                         <p>{{ product.description[page.lang] }}</p>
-                        <a href="/{{ page.lang }}/products/" class="btn btn-primary">{{ page.translations.view_details }}</a>
+                        <a href="/{{ page.lang }}/products/{{ product.id }}/" class="btn btn-primary">{{ page.translations.view_details }}</a>
                     </div>
                 </div>
                 {% endif %}

@@ -15,9 +15,9 @@ ref: products
         <div class="products-grid">
             {% for product in site.data.products %}
             <div class="product-card">
-                <div class="product-image">
+                <div class="product-thumbnail-wrapper">
                     {% if product.thumbnail %}
-                    <img src="{{ product.thumbnail }}" alt="{{ product.title[page.lang] }}">
+                    <img src="{{ product.thumbnail }}" alt="{{ product.title[page.lang] }}" class="product-thumbnail">
                     {% else %}
                     <div class="placeholder-image">📦</div>
                     {% endif %}

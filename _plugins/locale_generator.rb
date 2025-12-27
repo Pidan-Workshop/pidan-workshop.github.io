@@ -298,7 +298,7 @@ module Jekyll
       translations[key] = value[lang] if value.is_a?(Hash) && value[lang]
     end
   end
-  
+  # Hook：为博其他页面注入翻译
   Hooks.register :pages, :pre_render do |page|
     next unless page.data['lang'] && page.site.data['translations']
     

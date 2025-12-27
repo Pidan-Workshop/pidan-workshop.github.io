@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: 'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    {% seo %}
+    {% include core-styles.html %}
+    
+    <!-- Eight-legged essay specific styles -->
+    <link rel="stylesheet" href="{{ '/assets/css/eight-legged-essay-article.css' | relative_url }}">
+    
+    <!-- Page-specific styles -->
+    {% if page.extra_css %}
+    {% for css_file in page.extra_css %}
+    <link rel="stylesheet" href="{{ '/assets/css/' | append: css_file | relative_url }}">
+    {% endfor %}
+    {% endif %}
+    {% feed_meta %}
+</head>
+<body>
+    {% include header.html %}
+    
+    <main class="content eight-legged-essay-content">
+        <article class="essay-article">
+            <header class="essay-header">
+                <h1>{{ page.title }}</h1>
+                {% if page.description %}
+                <p class="essay-description">{{ page.description }}</p>
+                {% endif %}
+                {% if page.tags %}
+                <div class="essay-tags">
+                    {% for tag in page.tags %}
+                    <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </header>
+            
+            <div class="essay-body">
+                {{ content }}
+            </div>
+            
+            <footer class="essay-footer">
+                <nav class="essay-nav">
+                    <a href="{{ '/' | append: page.lang | append: '/products/' | relative_url }}" class="btn btn-secondary">
+                        {% if page.lang == 'zh' %}
+                            ← 返回产品
+                        {% else %}
+                            ← Back to Products
+                        {% endif %}
+                    </a>
+                </nav>
+            </footer>
+        </article>
+    </main>
+    
+    {% include footer.html %}
+    
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+</body>
+</html>

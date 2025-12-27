@@ -57,14 +57,14 @@ defaults:
       type: "pages"
     values:
       lang: "en"
-      layout: "default"
+      layout: "eight-legged-essay"
       permalink: /en/products/eight-legged-essay/:basename/
   - scope:
       path: "products/eight-legged-essay/zh"
       type: "pages"
     values:
       lang: "zh"
-      layout: "default"
+      layout: "eight-legged-essay"
       permalink: /zh/products/eight-legged-essay/:basename/
 
 # Sass

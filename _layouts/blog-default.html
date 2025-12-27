@@ -5,14 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
     {% seo %}
-    <!-- Core styles (required for all pages) -->
-    <link rel="stylesheet" href="{{ '/assets/css/variables.css' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/header.css' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/footer.css' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/buttons.css' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/cards.css' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/layouts.css' | relative_url }}">
-    <link rel="stylesheet" href="{{ '/assets/css/utilities.css' | relative_url }}">
+    {% include core-styles.html %}
     
     <!-- Blog-specific styles -->
     <link rel="stylesheet" href="{{ '/assets/css/blog.css' | relative_url }}">

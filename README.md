@@ -91,7 +91,6 @@ title: "Your Post Title"
 date: 2025-12-18
 author: Your Name
 tags: [tag1, tag2]
-ref: unique-post-id
 lang: en
 ---
 

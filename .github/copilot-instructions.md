@@ -50,7 +50,7 @@ bundle install
 3. 运行 `.\build.ps1 dev` 或 `.\build.ps1 build`（插件自动生成页面）
 
 ### 创建博客文章
-在 `_posts/en/YYYY-MM-DD-slug.md` 或 `_posts/zh/` 创建，使用相同 `ref` 值实现双语链接。
+在 `_posts/en/YYYY-MM-DD-slug.md` 或 `_posts/zh/` 创建，使用相同文件名（不同语言）实现双语链接。
 
 ## 关键规则
 

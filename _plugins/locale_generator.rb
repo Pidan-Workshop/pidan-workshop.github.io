@@ -41,10 +41,36 @@ module Jekyll
       # 为每个游戏生成详情页
       generate_game_detail_pages if @site.data['games']&.any?
       
+      # ===== 关键：在generate阶段为所有普通pages注入翻译 =====
+      inject_translations_to_pages
+      
       Jekyll.logger.info "LocaleGenerator:", "Generated #{@generated_count} pages"
     end
 
     private
+
+    # 为所有普通pages注入翻译
+    def inject_translations_to_pages
+      @site.pages.each do |page|
+        # 跳过由插件生成的页面（它们已经有translations）
+        next if page.is_a?(LocalePage) || page.is_a?(GameDetailPage)
+        # 只处理有lang字段的页面
+        next unless page.data['lang']
+        
+        lang = page.data['lang']
+        
+        # 创建扁平化的翻译hash
+        page.data['translations'] = {}
+        translations = page.data['translations']
+        
+        # 合并全局翻译（包括common + includes）
+        @common_translations.each do |key, value|
+          translations[key] = value[lang] if value.is_a?(Hash) && value[lang]
+        end
+        
+        Jekyll.logger.debug "LocaleGenerator:", "Injected #{translations.keys.size} translations for page #{page.path}"
+      end
+    end
 
     # 统一加载所有 locale 数据（含 common 和 includes）
     def load_all_locale_data
@@ -285,29 +311,22 @@ module Jekyll
       # 不需要读取，因为我们已经在初始化时设置了内容
     end
   end
+end
+
+# 为博客posts注册hook方案
+Jekyll::Hooks.register :posts, :pre_render do |document, payload|
+  next unless document.data['lang']
   
-  # Hook：为博客文章和其他页面注入翻译（从缓存读取）
-  Hooks.register :posts, :pre_render do |post|
-    next unless post.data['lang'] && post.site.data['translations']
-    
-    lang = post.data['lang']
-    translations = post.data['translations'] ||= {}
-    
-    # 合并全局翻译到页面翻译中
-    post.site.data['translations'].each do |key, value|
-      translations[key] = value[lang] if value.is_a?(Hash) && value[lang]
-    end
-  end
-  # Hook：为博其他页面注入翻译
-  Hooks.register :pages, :pre_render do |page|
-    next unless page.data['lang'] && page.site.data['translations']
-    
-    lang = page.data['lang']
-    translations = page.data['translations'] ||= {}
-    
-    # 合并全局翻译到页面翻译中
-    page.site.data['translations'].each do |key, value|
-      translations[key] = value[lang] if value.is_a?(Hash) && value[lang]
+  # 从site data获取共享翻译数据
+  site = payload['site']
+  translations = site.data['translations'] || {}
+  lang = document.data['lang']
+  
+  # 如果还没有翻译，用hook注入
+  unless document.data['translations']
+    document.data['translations'] = {}
+    translations.each do |key, value|
+      document.data['translations'][key] = value[lang] if value.is_a?(Hash) && value[lang]
     end
   end
 end

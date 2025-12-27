@@ -1,50 +1,41 @@
 {% assign languages = site.data.languages %}
 
-<div class="language-switcher">
+<div class="language-switcher" data-current-lang="{{ page.lang }}">
     {% for lang_data in languages %}
         {% assign lang_code = lang_data[0] %}
         {% assign lang_info = lang_data[1] %}
         
         {% if lang_code != page.lang %}
-            {% comment %} Find the translated version of current page {% endcomment %}
-            {% assign translated_url = nil %}
-            
-            {% if page.ref %}
-                {% comment %} 1. 先尝试在普通页面中查找（page.ref） {% endcomment %}
-                {% assign pages_with_ref = site.pages | where: "ref", page.ref %}
-                {% assign translated_page = pages_with_ref | where: "lang", lang_code | first %}
-                
-                {% if translated_page %}
-                    {% assign translated_url = translated_page.url | relative_url %}
-                {% else %}
-                    {% comment %} 2. 如果是博客文章，在 site.posts 中查找（blog post） {% endcomment %}
-                    {% for post in site.posts %}
-                        {% if post.ref == page.ref and post.lang == lang_code %}
-                            {% assign translated_url = post.url | relative_url %}
-                            {% break %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            {% endif %}
-            
-            {% if translated_url %}
-                <a href="{{ translated_url }}" 
-                   lang="{{ lang_code }}" 
-                   class="lang-link"
-                   title="{{ lang_info.name }}">
-                    <span class="flag">{{ lang_info.flag }}</span>
-                    <span class="lang-name">{{ lang_info.name }}</span>
-                </a>
-            {% else %}
-                {% comment %} 备用方案：直接链接到主语言首页 {% endcomment %}
-                <a href="/{{ lang_code }}/" 
-                   lang="{{ lang_code }}" 
-                   class="lang-link"
-                   title="{{ lang_info.name }}">
-                    <span class="flag">{{ lang_info.flag }}</span>
-                    <span class="lang-name">{{ lang_info.name }}</span>
-                </a>
-            {% endif %}
+            <a href="#" 
+               data-lang="{{ lang_code }}" 
+               class="lang-link"
+               title="{{ lang_info.name }}">
+                <span class="flag">{{ lang_info.flag }}</span>
+                <span class="lang-name">{{ lang_info.name }}</span>
+            </a>
         {% endif %}
     {% endfor %}
 </div>
+
+<script>
+// 简单的路由替换实现
+document.querySelectorAll('.language-switcher .lang-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetLang = this.getAttribute('data-lang');
+        const currentUrl = window.location.pathname;
+        const currentLang = document.querySelector('.language-switcher').getAttribute('data-current-lang');
+        
+        // 简单替换：将 /en/ 或 /zh/ 替换为目标语言
+        let newUrl = currentUrl.replace(`/${currentLang}/`, `/${targetLang}/`);
+        
+        // 如果没有语言前缀（主页情况），加上目标语言
+        if (newUrl === currentUrl) {
+            newUrl = `/${targetLang}/`;
+        }
+        
+        window.location.href = newUrl;
+    });
+});
+</script>

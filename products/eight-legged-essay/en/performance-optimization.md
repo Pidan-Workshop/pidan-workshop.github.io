@@ -1,5 +1,6 @@
 ---
-title: "Frontend Performance Optimization"
+title: "Performance Optimization Techniques"
+description: "Discover profiling, caching strategies, memory management, and optimization techniques for writing high-performance applications."
 tags: ["frontend"]
 ---
 
@@ -84,3 +85,4 @@ getLCP(console.log);
 ## Conclusion
 
 Frontend performance is a continuous process. Regularly monitor metrics and optimize based on real user data.
+

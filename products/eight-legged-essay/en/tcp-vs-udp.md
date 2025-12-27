@@ -1,5 +1,6 @@
 ---
-title: "Network Protocols: Understanding TCP vs UDP"
+title: "TCP vs UDP: Protocol Deep Dive"
+description: "Understand the differences between TCP and UDP, connection models, reliability guarantees, and choose the right protocol for different use cases."
 tags: ["networking"]
 ---
 
@@ -101,3 +102,4 @@ Network protocols are the foundation of internet communication. Understanding TC
 ## Conclusion
 
 Choose TCP for accuracy-critical applications and UDP for real-time, low-latency applications. Modern protocols like QUIC offer hybrid benefits.
+

@@ -1,5 +1,6 @@
 ---
 title: "排序算法：完整指南"
+description: "掌握基础排序算法，包括冒泡排序、快速排序、归并排序和堆排序，以及复杂性分析和实现细节。"
 tags: ["algorithms", "data-structures"]
 ---
 

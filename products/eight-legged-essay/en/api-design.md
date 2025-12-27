@@ -1,5 +1,6 @@
 ---
 title: "API Design Patterns and Best Practices"
+description: "Learn RESTful API principles, resource-oriented design, and best practices for building scalable APIs that stand up to production scrutiny."
 tags: ["backend", "api-design"]
 ---
 
@@ -74,3 +75,4 @@ Designing APIs is both an art and a science. A well-designed API can make or bre
 ## Conclusion
 
 Well-designed APIs are crucial for modern applications. Following these patterns ensures maintainability and scalability.
+

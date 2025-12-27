@@ -1,5 +1,6 @@
 ---
-title: "Database Indexing: Improving Query Performance"
+title: "Indexing Strategies and Query Optimization"
+description: "Explore database indexing techniques, B-tree structures, query optimization, and strategies to improve database performance at scale."
 tags: ["databases"]
 ---
 
@@ -73,3 +74,4 @@ Most databases use B-Tree structure:
 ## Conclusion
 
 Indexing is crucial for database performance. However, indexes should be used judiciously as they come with maintenance costs.
+

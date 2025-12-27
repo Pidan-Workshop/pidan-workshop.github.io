@@ -1,5 +1,6 @@
 ---
-title: "Understanding Data Structures: Arrays vs Linked Lists"
+title: "Arrays vs Linked Lists: Deep Dive"
+description: "Compare arrays and linked lists across performance, memory usage, and use cases. Understand when to use each data structure in real-world applications."
 tags: ["data-structures"]
 ---
 
@@ -64,3 +65,4 @@ Data structures are fundamental to efficient programming. Choosing the right str
 ## Conclusion
 
 Both data structures have their place. Use arrays for random access patterns and linked lists when you have frequent modifications.
+

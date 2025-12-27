@@ -1,5 +1,6 @@
 ---
 title: "网络协议：理解 TCP vs UDP"
+description: "理解 TCP 和 UDP 的区别、连接模型、可靠性保证，并为不同用例选择合适的协议。"
 tags: ["networking"]
 ---
 

@@ -1,5 +1,6 @@
 ---
-title: "Sorting Algorithms: A Comprehensive Guide"
+title: "Sorting Algorithms: Complete Guide"
+description: "Master fundamental sorting algorithms including bubble sort, quicksort, mergesort, and heapsort with complexity analysis and implementation details."
 tags: ["algorithms", "data-structures"]
 ---
 
@@ -50,3 +51,4 @@ Merge sort divides the array in half and recursively sorts both halves.
 ## Conclusion
 
 Different sorting algorithms have different strengths. Choose based on your specific requirements for time complexity, space complexity, and data characteristics.
+

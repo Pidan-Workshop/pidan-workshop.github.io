@@ -51,6 +51,22 @@ defaults:
       permalink: /zh/blog/:year/:month/:day/:title/
   # 注意：不再需要 en/ 和 zh/ 的 scope，因为插件会自动设置
 
+  # 八股文页面配置
+  - scope:
+      path: "products/eight-legged-essay/en"
+      type: "pages"
+    values:
+      lang: "en"
+      layout: "default"
+      permalink: /en/products/eight-legged-essay/:basename/
+  - scope:
+      path: "products/eight-legged-essay/zh"
+      type: "pages"
+    values:
+      lang: "zh"
+      layout: "default"
+      permalink: /zh/products/eight-legged-essay/:basename/
+
 # Sass
 sass:
   style: compressed

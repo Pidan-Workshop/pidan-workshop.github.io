@@ -1,5 +1,6 @@
 ---
 title: "API 设计模式和最佳实践"
+description: "学习 RESTful API 原则、面向资源的设计和构建可扩展 API 的最佳实践，使其能够承受生产环境的考验。"
 tags: ["backend", "api-design"]
 ---
 

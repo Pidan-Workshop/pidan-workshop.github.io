@@ -1,5 +1,6 @@
 ---
 title: "CI/CD 管道：自动化部署"
+description: "理解持续集成和持续部署，自动化工具、测试策略和现代 DevOps 的部署模式。"
 tags: ["devops"]
 ---
 

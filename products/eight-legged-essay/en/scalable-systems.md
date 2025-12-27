@@ -1,5 +1,6 @@
 ---
-title: "System Design: Building Scalable Applications"
+title: "Building Scalable Systems"
+description: "Learn system design principles, load balancing, database sharding, microservices, and architectural patterns for building systems that scale to millions of users."
 tags: ["system-design"]
 ---
 
@@ -89,8 +90,8 @@ System design is the art of building large-scale applications that are reliable,
 
 ### Architecture
 ```
-Client → Load Balancer → API Servers → Cache (Redis) → Database
-                                     ↑
+Client �?Load Balancer �?API Servers �?Cache (Redis) �?Database
+                                     �?
                               Rate Limiter
 ```
 
@@ -103,3 +104,4 @@ Client → Load Balancer → API Servers → Cache (Redis) → Database
 ## Conclusion
 
 System design is about making trade-offs. There's no one-size-fits-all solution. Understand requirements, constraints, and choose architectures accordingly.
+

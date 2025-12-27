@@ -38,6 +38,31 @@ extra_css:
     </div>
 </section>
 
+<section class="featured-products">
+    <div class="container">
+        <h2>{{ page.translations.products_title }}</h2>
+        <div class="products-grid">
+            {% for product in site.data.products %}
+                {% if product.featured %}
+                <div class="product-card">
+                    <div class="product-thumbnail-wrapper">
+                        <img src="{{ product.thumbnail | relative_url }}" alt="{{ product.title[page.lang] }}" class="product-thumbnail">
+                    </div>
+                    <div class="product-info">
+                        <h3>{{ product.title[page.lang] }}</h3>
+                        <p>{{ product.description[page.lang] }}</p>
+                        <a href="/{{ page.lang }}/products/" class="btn btn-primary">{{ page.translations.view_details }}</a>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="text-center">
+            <a href="/{{ page.lang }}/products/" class="btn btn-secondary">{{ page.translations.learn_more }}</a>
+        </div>
+    </div>
+</section>
+
 <section class="recent-posts">
     <div class="container">
         <h2>{{ page.translations.blog_title }}</h2>

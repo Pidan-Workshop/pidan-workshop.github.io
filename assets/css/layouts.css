@@ -25,11 +25,13 @@
 
 /* Featured Sections */
 .featured-games,
+.featured-products,
 .recent-posts {
     padding: 4rem 0;
 }
 
 .featured-games h2,
+.featured-products h2,
 .recent-posts h2 {
     text-align: center;
     font-size: 2rem;

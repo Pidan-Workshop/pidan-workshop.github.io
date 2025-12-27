@@ -13,27 +13,22 @@ ref: products
 <section class="products-section">
     <div class="container">
         <div class="products-grid">
+            {% for product in site.data.products %}
             <div class="product-card">
                 <div class="product-image">
+                    {% if product.thumbnail %}
+                    <img src="{{ product.thumbnail }}" alt="{{ product.title[page.lang] }}">
+                    {% else %}
                     <div class="placeholder-image">📦</div>
+                    {% endif %}
                 </div>
                 <div class="product-info">
-                    <h3>Product 1</h3>
-                    <p>Coming soon! We're working on exciting new products for you.</p>
-                    <a href="#" class="btn btn-secondary">{{ page.translations.view_details }}</a>
+                    <h3>{{ product.title[page.lang] }}</h3>
+                    <p>{{ product.description[page.lang] }}</p>
+                    <a href="/{{ page.lang }}/products/{{ product.id }}/" class="btn btn-secondary">{{ page.translations.view_details }}</a>
                 </div>
             </div>
-            
-            <div class="product-card">
-                <div class="product-image">
-                    <div class="placeholder-image">🛠️</div>
-                </div>
-                <div class="product-info">
-                    <h3>Product 2</h3>
-                    <p>Stay tuned for updates on our innovative tools and solutions.</p>
-                    <a href="#" class="btn btn-secondary">{{ page.translations.view_details }}</a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

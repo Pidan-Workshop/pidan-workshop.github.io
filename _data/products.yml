@@ -1,0 +1,11 @@
+- id: eight-legged-essay
+  title:
+    en: "Eight-Legged Essay"
+    zh: "八股文"
+  description:
+    en: "A creative writing tool that helps you master the classical Chinese essay format. Explore the elegance and structure of traditional eight-legged essays with interactive guides and examples."
+    zh: "一个创意写作工具，帮助您掌握古典中文八股文格式。通过互动指南和示例探索传统八股文的优雅和结构。"
+  thumbnail: "/assets/images/products/eight-legged-essay.jpg"
+  release_date: 2025-12-18
+  tags: ["writing", "education", "chinese-literature"]
+  featured: true

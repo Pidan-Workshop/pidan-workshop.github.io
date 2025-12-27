@@ -1,3 +1,8 @@
+---
+title: "Database Indexing: Improving Query Performance"
+tags: ["databases"]
+---
+
 # Database Indexing: Improving Query Performance
 
 ## Introduction

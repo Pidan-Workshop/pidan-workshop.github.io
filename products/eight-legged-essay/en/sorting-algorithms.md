@@ -1,3 +1,8 @@
+---
+title: "Sorting Algorithms: A Comprehensive Guide"
+tags: ["algorithms", "data-structures"]
+---
+
 # Sorting Algorithms: A Comprehensive Guide
 
 ## Introduction

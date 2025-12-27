@@ -1,3 +1,8 @@
+---
+title: "Understanding Data Structures: Arrays vs Linked Lists"
+tags: ["data-structures"]
+---
+
 # Understanding Data Structures: Arrays vs Linked Lists
 
 ## Introduction

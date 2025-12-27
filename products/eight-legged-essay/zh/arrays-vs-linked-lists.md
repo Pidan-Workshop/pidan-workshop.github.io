@@ -1,3 +1,8 @@
+---
+title: "理解数据结构：数组 vs 链表"
+tags: ["data-structures"]
+---
+
 # 理解数据结构：数组 vs 链表
 
 ## 简介

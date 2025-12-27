@@ -1,3 +1,8 @@
+---
+title: "CI/CD Pipelines: Automating Deployments"
+tags: ["devops"]
+---
+
 # CI/CD Pipelines: Automating Deployments
 
 ## Introduction
@@ -98,4 +103,4 @@ jobs:
 
 ## Conclusion
 
-CI/CD practices dramatically improve development speed and code quality. Invest time in setting up a robust pipeline for long-term benefits.
+CI/CD practices enable rapid, reliable software delivery. Invest in your pipeline infrastructure for long-term benefits.

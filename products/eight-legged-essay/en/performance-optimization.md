@@ -1,3 +1,8 @@
+---
+title: "Frontend Performance Optimization"
+tags: ["frontend"]
+---
+
 # Frontend Performance Optimization
 
 ## Introduction
